@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, } from 'react-native'
+import { View, Text,Button } from 'react-native'
 import style from '../Styles/MainMenu_Style'
 
 export default class MainMenu extends Component {
@@ -13,6 +13,10 @@ export default class MainMenu extends Component {
         return (
             <View style={style.MainMenu}>
                 <Text > Menu Principal donde va a trabajar Jose :P </Text>
+                <Button
+                    title="Crear Menú"
+                    onPress={() => this.props.navigation.navigate('CreateMenu')}
+                />
             </View>
         )
     }
