@@ -22,7 +22,7 @@ export default class MainMenu extends Component {
 
                 <Button
                     title="Sodas"
-                    onPress={() => this.props.navigation.navigate('ModifyPSoda')}
+                    onPress={() => this.props.navigation.navigate('PerfilSoda')}
                 />
             </View>
             
