@@ -16,12 +16,10 @@ export default function App() {
         <Stack.Screen
           name="MainMenu"
           component={MainMenu}
-        //options={{title:'Ventana Principal'}}
         />
         <Stack.Screen
           name="CreateMenu"
           component={CreateMenu}
-          //options={{title:'Ventana Crear Menú'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
