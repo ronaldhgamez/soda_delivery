@@ -44,7 +44,15 @@ export default class MainMenu extends Component {
                     title="Crear Menú"
                     onPress={() => this.props.navigation.navigate('CreateMenu')}
                 />
+                <Text> </Text>
+                <Text> </Text>
+
+                <Button
+                    title="Sodas"
+                    onPress={() => this.props.navigation.navigate('PerfilSoda')}
+                />
             </View>
+            
         )
     }
 }
