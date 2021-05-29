@@ -1,32 +1,104 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View,Picker } from 'react-native';
 import style from '../Styles/PerfilSoda_Style';
-import { Icon,Button } from 'react-native-elements';
+import {Text,Icon,Button,Input} from 'react-native-elements';
 
 
 class ModifySoda extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      spinner: false,
+      value: 0,
+      PickerSelectedVal: ''
     };
   }
 
   render() {
     return (
       <View style={style.container}>
-
-
-        <Text style = {style.lblTittle}> Perfil Soda</Text>
-
-        <Icon 
-        raised
-            name="trash" 
-            type='ionicon'
-            color='#f50'
-            onPress={() => console.log('borrando')}
+        <Text style = {style.logo}> Perfil Soda</Text>
+          <Input
+          placeholder='Nombre - soda'
+          leftIcon={
+          <Icon
+           name='edit'
+           type="font-awesome"
+           size={24}
+           color='black'
+         />
+         } 
         />
-        
-        <Text>  </Text>
+        <Input
+          placeholder='Propietario'
+          leftIcon={
+          <Icon
+           name='edit'
+           type= 'font-awesome'
+           size={24}
+           color='black'
+         />
+         } 
+        />
+
+        <Input
+          placeholder='Descripcion'
+          leftIcon={
+          <Icon
+           name='edit'
+           type= 'font-awesome'
+           size={24}
+           color='black'
+         />
+         } 
+        />
+        <Input
+          placeholder='Direccion exacta'
+          leftIcon={
+          <Icon
+           name='edit'
+           type= 'font-awesome'
+           size={24}
+           color='black'
+         />
+         } 
+        />
+        <Input
+          placeholder='Tipo comida'
+          leftIcon={
+          <Icon
+           name='edit'
+           type= 'font-awesome'
+           size={24}
+           color='black'
+         />
+         } 
+        />
+        <Input
+          placeholder='Contraseña'
+          leftIcon={
+          <Icon
+           name='edit'
+           type= 'font-awesome'
+           size={24}
+           color='black'
+         />
+         } 
+        />
+
+        <Input
+          placeholder='usuario'
+          
+          leftIcon={
+          <Icon
+           name='edit'
+           type= 'font-awesome'
+           size={24}
+           color='black'
+         />
+         } 
+        />
+    
 
         <Button
           icon={{
@@ -35,6 +107,15 @@ class ModifySoda extends Component {
           color: "white"
         }}
         title="Modificar"
+        />
+
+      <Icon 
+        raised
+            name="trash" 
+            type='ionicon'
+            color='#f50'
+            size={20}
+            onPress={() => console.log('borrando')}
         />
         
       </View>

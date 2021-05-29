@@ -1,12 +1,12 @@
 import React from 'react'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import {StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native';
 
 
 export default StyleSheet.create({
     container:{
         flex: 1,
-        padding: hp(5),
+        padding: hp(3),
         marginBottom: hp(2),
         backgroundColor: '#ffffff',
         alignItems: 'center',
@@ -14,6 +14,12 @@ export default StyleSheet.create({
     lblTittle: {
         fontSize: wp(10),
         fontWeight: "bold"
+    },
+    logo: {
+        fontWeight: "bold",
+        fontSize: 30,
+        color: "#8a2be2",
+        marginBottom: 20
     },
     addBtn:{
         width:'100%',
