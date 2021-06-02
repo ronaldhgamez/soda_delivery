@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 //import views
+import auxiliar from '../src/Views/auxiliar'
 import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
 import PerfilSoda from '../src/Views/PerfilSoda';
@@ -14,6 +15,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen 
+          name ="Auxiliar"
+          component={auxiliar}
+        />
         <Stack.Screen
           name="MainMenu"
           component={MainMenu}
