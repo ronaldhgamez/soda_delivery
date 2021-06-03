@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 import auxiliar from '../src/Views/auxiliar'
 import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
-import PerfilSoda from '../src/Views/PerfilSoda';
+import ModifySoda from '../src/Views/ModifySoda';
 
 export default function App() {
   return (
@@ -28,8 +28,8 @@ export default function App() {
           component={CreateMenu}
         />
         <Stack.Screen
-          name="PerfilSoda"
-          component={PerfilSoda}
+          name="ModifySoda"
+          component={ModifySoda}
           //options={{title:'Ventana Crear Menú'}}
         />
       </Stack.Navigator>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View,Picker } from 'react-native';
-import style from '../Styles/PerfilSoda_Style';
+import style from '../Styles/ModifyPS_Style';
 import {Text,Icon,Button,Input} from 'react-native-elements';
 
 
@@ -16,8 +16,9 @@ class ModifySoda extends Component {
 
   render() {
     return (
+      
       <View style={style.container}>
-        <Text style = {style.logo}> Perfil Soda</Text>
+        <Text style = {style.logo}> Modificar Soda</Text>
           <Input
           placeholder='Nombre - soda'
           leftIcon={
