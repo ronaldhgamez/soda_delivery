@@ -43,7 +43,6 @@ function _renderItem({ item, index }) {
                     name='angle-double-up'
                     type='font-awesome'
                     color='black'
-                    onPress={() => { item.display = !item.display }}
                 />
             </View>
         </View >
