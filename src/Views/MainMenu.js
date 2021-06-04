@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { View, ScrollView, TouchableHighlight, Image, TouchableOpacity } from 'react-native'
 import Ionicons from '@expo/vector-icons'
 import style from '../Styles/MainMenu_Style'
-import { Text, Icon, Button, Input, SearchBar } from 'react-native-elements';
+import { Text, Icon, SearchBar } from 'react-native-elements';
+import { Button } from 'react-native-elements/dist/buttons/Button';
 const helper = require('../Utilities/SodasHelper')
-
+import { Picker, Item } from '@react-native-community/picker'
 
 //const Tab = createBottomTabNavigator();
 
@@ -13,8 +14,13 @@ export default class MainMenu extends Component {
         super(props)
         this.state = {
             sodas: [],
+            sodasBackUp: [],
             search: '',
-            filtersVisible: false
+            filtersVisible: false,
+            foodTypes: [],
+            allAddresses: [],
+            selectedFoodFilter: "Todo",
+            selectedAddressFilter: "Todo"
         }
     }
 
@@ -28,13 +34,20 @@ export default class MainMenu extends Component {
 
     getSodas = async () => {
         let sodas = await helper.getSodas()
-        let lst = []
+        let sodaLst = []
+        let foodLst = []
+        let addressLst = []
         for (var key in sodas) {
-            lst.push(sodas[key])
+            sodaLst.push(sodas[key])
+            if (!foodLst.includes(sodas[key].type)) {
+                foodLst.push(sodas[key].type)
+            }
+            if (!addressLst.includes(sodas[key].exactAddress)) {
+                addressLst.push(sodas[key].exactAddress)
+            }
         }
-        this.setState({ sodas: lst })
+        this.setState({ sodas: sodaLst, allAddresses: addressLst, foodTypes: foodLst, sodasBackUp: sodaLst })
     }
-
     componentDidMount() {
         this.getSodas()
     }
@@ -61,12 +74,67 @@ export default class MainMenu extends Component {
         )
     }
 
+    onFoodFilterUpdate = (value) => {
+        this.setState({ selectedFoodFilter: value })
+        setTimeout(() => {
+            this.onFilterResults()
+        }, 500)
+    }
+    onAddressFilterUpdate = (value) => {
+        this.setState({ selectedAddressFilter: value })
+        setTimeout(() => {
+            this.onFilterResults()
+        }, 500);
+
+    }
+    onFilterResults = () => {
+
+        if (this.state.selectedAddressFilter == "Todo" && this.state.selectedFoodFilter == "Todo") {
+            this.setState({ sodas: this.state.sodasBackUp })
+        } else {
+            let filterResult = []
+            if (this.state.selectedAddressFilter !== "Todo" && this.state.selectedFoodFilter !== "Todo") {
+                this.state.sodasBackUp.map((soda) => {
+                    if (soda.exactAddress == this.state.selectedAddressFilter || soda.type == this.state.selectedFoodFilter) {
+                        filterResult.push(soda)
+                    }
+                })
+            } else if (this.state.selectedAddressFilter !== "Todo") {
+                this.state.sodasBackUp.map((soda) => {
+                    if (soda.exactAddress == this.state.selectedAddressFilter) {
+                        filterResult.push(soda)
+                    }
+                })
+            } else if (this.state.selectedFoodFilter !== "Todo") {
+                this.state.sodasBackUp.map((soda) => {
+                    if (soda.type == this.state.selectedFoodFilter) {
+                        filterResult.push(soda)
+                    }
+                })
+            }
+            this.setState({ sodas: filterResult })
+        }
+    }
+    a = () => {
+        alert("botón para hacer pruebas ")
+    }
     render() {
+        let myFoodTypes = []
+        myFoodTypes.push(<Picker.Item label={"Todo"} value={"Todo"} key={"Todo"} />)
+        this.state.foodTypes.map((food, index) => {
+            myFoodTypes.push(<Picker.Item label={food} value={food} key={index} />)
+        })
+        let myAddresses = []
+        myAddresses.push(<Picker.Item label={"Todo"} value={"Todo"} key={"Todo"} />)
+        this.state.allAddresses.map((address, index) => {
+
+            myAddresses.push(<Picker.Item label={address} value={address} key={index} />)
+        })
         return (
             <View style={style.MainMenu}>
                 <View style={style.searchBar}>
                     <SearchBar
-                        placeholder="Type here for search"
+                        placeholder="Type here to search"
                         onChangeText={this.onSearchUpdate}
                         value={this.state.search}
                         lightTheme={true}
@@ -78,14 +146,33 @@ export default class MainMenu extends Component {
                     <Icon
                         containerStyle={style.filterIconContainer}
                         name='reorder'
-                        color='#bbbbbbe0'
+                        color='rgba(3, 31, 79,0.9)'
                         size={50}
                         onPress={this.onFiltersVisibleStatus}
                     />
                 </View>
                 {this.state.filtersVisible &&
                     <View style={style.filtersMainContainer}>
-                        <Text>Aqui van los filtros</Text>
+                        <View>
+                            <Text style={style.filtersText}>Filtro por especialidad</Text>
+                            <View style={{ borderColor: 'rgba(45, 107, 224, 0.5)', borderWidth: 2, borderRadius: 30 }}>
+                                <Picker
+                                    selectedValue={this.state.selectedFoodFilter}
+                                    onValueChange={(value) => this.onFoodFilterUpdate(value)} >
+                                    {myFoodTypes}
+                                </Picker>
+                            </View>
+                        </View>
+                        <View>
+                            <Text style={style.filtersText}>Filtro por ubicación</Text>
+                            <View style={{ borderColor: 'rgba(45, 107, 224, 0.5)', borderWidth: 2, borderRadius: 30 }}>
+                                <Picker
+                                    selectedValue={this.state.selectedAddressFilter}
+                                    onValueChange={(value) => this.onAddressFilterUpdate(value)} >
+                                    {myAddresses}
+                                </Picker>
+                            </View>
+                        </View>
                     </View>
                 }
                 <ScrollView style={style.content}>
@@ -93,6 +180,10 @@ export default class MainMenu extends Component {
                         return this.dinamycSoda(sod, i)
                     })
                     }
+                    <Button
+                        title="nada"
+                        onPress={this.a}
+                    />
                 </ScrollView>
                 <View style={style.bottonView}>
                     <Icon
@@ -107,6 +198,7 @@ export default class MainMenu extends Component {
                         name='settings'
                         size={45}
                         color='#bbbbbbe0'
+
                         onPress={() => alert("Hacer ventana de settings")}
                     />
                 </View>

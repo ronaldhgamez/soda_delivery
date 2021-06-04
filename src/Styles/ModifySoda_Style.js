@@ -10,6 +10,7 @@ export default StyleSheet.create({
         marginBottom: hp(2),
         backgroundColor: '#ffffff',
         alignItems: 'center',
+        fontSize: wp(3),
     },
     lblTittle: {
         fontSize: wp(10),
@@ -27,5 +28,11 @@ export default StyleSheet.create({
         backgroundColor: 'deeppink',
         justifyContent: 'center',
         color:'#fff'
-    }
+    },
+    input: {
+        height: 35,
+        margin: 12,
+        borderWidth: 1
+      }
+
 })

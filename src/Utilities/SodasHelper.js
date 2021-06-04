@@ -8,11 +8,8 @@ const uri = `http://${manifest.debuggerHost.split(':').shift()}:4000` //comment 
 async function getSodas() {
     let response = await fetch(`${uri}/api/getSodas`);
     let data = await response.json();
-    console.log(data.sodas);
     return data.sodas;
 }
-
-
 
 export {
     getSodas

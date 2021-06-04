@@ -11,6 +11,7 @@ import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
 import PerfilSoda from '../src/Views/PerfilSoda';
 import PerfilSodaOriginal from '../src/Views/SodasPerfilOriginal'
+import ModifySoda from '../src/Views/ModifySoda';
 
 export default function App() {
   return (
@@ -33,9 +34,9 @@ export default function App() {
           component={CreateMenu}
         />
         <Stack.Screen
-          name="PerfilSoda"
-          component={PerfilSoda}
-        //options={{title:'Ventana Crear Menú'}}
+          name="ModifySoda"
+          component={ModifySoda}
+          //options={{title:'Ventana Crear Menú'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
