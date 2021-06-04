@@ -26,7 +26,8 @@ export default StyleSheet.create({
         flex: 1,
         width: '95%',
         marginTop: 10,
-        backgroundColor:'rgba(0,0,0,0.1)'
+        backgroundColor:'rgba(0,0,0,0.1)',
+        borderRadius:8
     },
     bottonView: {
         width: '100%',
@@ -41,7 +42,9 @@ export default StyleSheet.create({
         padding: '0.5%',
         borderColor:'rgba(0,0,0,0.1)',
         borderWidth:1,
-        marginBottom:2
+        marginBottom:2,
+        backgroundColor:'white',
+        borderRadius:10
     },
     dinamycLeftSide: {
         flex: 2,

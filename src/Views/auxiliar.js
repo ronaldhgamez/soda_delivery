@@ -7,8 +7,8 @@ export default class auxiliar extends Component {
     render() {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', alignContent: 'center', flex: 1 }}>
-                <Text>
-                    Ocupaba quitar los botones de mi pantalla XD
+                <Text style={{color:'red',fontWeight:'bold'}}>
+                    Ventana provisional 
                 </Text>
                 <Button
                     title="MainMenu"

@@ -180,10 +180,6 @@ export default class MainMenu extends Component {
                         return this.dinamycSoda(sod, i)
                     })
                     }
-                    <Button
-                        title="nada"
-                        onPress={this.a}
-                    />
                 </ScrollView>
                 <View style={style.bottonView}>
                     <Icon
