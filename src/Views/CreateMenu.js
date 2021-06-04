@@ -60,7 +60,7 @@ export default class CreateMenu extends Component {
                                         <Text style = {style.addBtnText}>
                                             {<Image
                                             style={style.iconHistorial}
-                                            source={require('/soda_delivery-main/assets/eliminar.png')}/>}</Text>
+                                            source={require('../../assets/eliminar.png')}/>}</Text>
                                     </TouchableOpacity>
                                 </View>
                             )
