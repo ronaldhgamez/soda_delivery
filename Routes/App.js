@@ -9,17 +9,14 @@ const Stack = createStackNavigator();
 import auxiliar from '../src/Views/auxiliar'
 import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
-import PerfilSodaOriginal from '../src/Views/SodasPerfilOriginal'
+import SodasPerfilOriginal from '../src/Views/SodasPerfilOriginal'
 import ModifySoda from '../src/Views/ModifySoda';
+
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="PerfilSodaOriginal"
-          component={PerfilSodaOriginal}
-        />
         <Stack.Screen
           name="Auxiliar"
           component={auxiliar}
@@ -31,6 +28,10 @@ export default function App() {
         <Stack.Screen
           name="CreateMenu"
           component={CreateMenu}
+        />
+        <Stack.Screen
+          name="SodasPerfilOriginal"
+          component={SodasPerfilOriginal}
         />
         <Stack.Screen
           name="ModifySoda"

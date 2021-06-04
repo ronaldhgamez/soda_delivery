@@ -3,6 +3,8 @@ import { Text, View, FlatList, TouchableOpacity, ActivityIndicator } from 'react
 import { Avatar, Image, Icon } from 'react-native-elements'
 import styles from '../Styles/Sodas_Perfil_Original_Styles'
 import { _renderItem, _renderProduct } from '../Components/FlatListProducts';
+import ModifySoda from './ModifySoda';
+import 'react-native-gesture-handler';
 
 export default class SodaPerfilOriginal extends Component {
 
@@ -128,7 +130,7 @@ export default class SodaPerfilOriginal extends Component {
                             size={26} name='edit'
                             type='font-awesome'
                             color='rgba(45, 107, 224, 0.9)'
-                            onPress={() => { console.log("editing...") }}>
+                            onPress={() => this.props.navigation.navigate('ModifySoda')}>
                         </Icon>
                     </View>
                 </View>

@@ -20,7 +20,7 @@ export default class auxiliar extends Component {
                 />
                 <Button
                     title="Sodas"
-                    onPress={() => this.props.navigation.navigate('ModifySoda')}
+                    onPress={() => this.props.navigation.navigate('SodasPerfilOriginal')}
                 />
             </View>
         )
