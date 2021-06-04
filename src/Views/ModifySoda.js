@@ -3,7 +3,7 @@ import { View,Picker,TextInput } from 'react-native';
 import style from '../Styles/ModifySoda_Style';
 import {Text,Icon,Button} from 'react-native-elements';
 import sodasFuntion from '../Components/sodasFuntion'
-
+import {addMenu} from "../Utilities/CreateMenuCon";
 
 class ModifySoda extends Component {
   constructor(props) {
@@ -35,6 +35,12 @@ class ModifySoda extends Component {
   eliminar = () =>{
     //const res = await db.collection('cafes').doc('DC').delete();
   }
+  
+  //Create the menu
+    createMenu = async () => {
+         let idInserted =await addMenu({idSoda: "1", descripcion: "HELLO"});
+         this.setState({idInserted:idInserted});
+    }
 
   render() {
     return (
@@ -102,6 +108,11 @@ class ModifySoda extends Component {
           icon={{ name: "arrow-right", size: 15, color: "white" }}
           title="Modificar"
           onPress={() => this.modificarSoda()}
+        />
+
+        <Button
+          title="Crear Menú"
+          onPress={() =>{this.createMenu(), this.props.navigation.navigate('CreateMenu',{idMenu : this.state.idInserted})}}
         />
 
       <Icon 
