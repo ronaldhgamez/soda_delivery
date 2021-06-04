@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import { View,Picker,TextInput } from 'react-native';
 import style from '../Styles/ModifySoda_Style';
 import {Text,Icon,Button} from 'react-native-elements';
+import sodasFuntion from '../Components/sodasFuntion'
 
 
 class ModifySoda extends Component {
@@ -13,17 +14,26 @@ class ModifySoda extends Component {
       descrip:"",
       direccion:"",
       tipoComida:"",
-      contrasena:"",
-      usuario:"",
+      user:"",
       spinner: false,
       value: 0,
-      PickerSelectedVal: ''
+      PickerSelectedVal: '',
+      setMsj:''
     };
   }
 
-  //consultar el nombre de soda y si es igual hacer la modificacion o eliminar
-  solicitud = () => {
-      
+  //------------
+  modificarSoda = (nombre, dueno, descripcion, direccion, tipoComida, usuario) => {
+    console.log("entra");
+    if (true) {
+        console.log('Soda modificada');
+    } else {
+        console.log("invalido")
+    }
+  }
+
+  eliminar = () =>{
+    //const res = await db.collection('cafes').doc('DC').delete();
   }
 
   render() {
@@ -31,63 +41,67 @@ class ModifySoda extends Component {
       <View style={style.container}>
         <Text></Text>
         <Text style = {style.logo}> Modificar Soda</Text>
+        <Icon name='edit'type="font-awesome"size={35} color='black'/>
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/>
+        <Text>Soda</Text>
+        
           <TextInput placeholder='Nombre - soda'
           style={style.input}
-          onChangeText={value => this.setState({ comment: value })}  
+          onChangeText={value => this.setState({ nombre: value })}  
         />
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/>
+        <Text>Dueño</Text>
+
+        
         <TextInput
           placeholder='Propietario'
           style={style.input}
-          onChangeText={value => this.setState({ comment: value })} 
+          onChangeText={value => this.setState({ dueno: value })} 
         />
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/>
+        <Text>Descripcion</Text>
+   
+        
         <TextInput
           placeholder='Descripcion'
-          style={style.input}
-          onChangeText={value => this.setState({ comment: value })} 
+          style={style.inputdescripcion}
+          onChangeText={value => this.setState({ descrip: value })} 
         />
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/> 
+        <Text>Direccion</Text>
+     
+        
         <TextInput
           placeholder='Direccion exacta' 
-          style={style.input}
-          onChangeText={value => this.setState({ comment: value })} 
+          style={style.inputdescripcion}
+          onChangeText={value => this.setState({ direccion: value })} 
         />
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/>
+         <Text>Tipo de Comida</Text>
+      
+        
         <TextInput
           placeholder='Tipo comida'
           style={style.input} 
-          onChangeText={value => this.setState({ comment: value })} 
+          onChangeText={value => this.setState({ tipoComida: value })} 
         />
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/>
-        <TextInput
-          placeholder='Contraseña'
-          style={style.input}
-          onChangeText={value => this.setState({ comment: value })} 
-        />
+        <Text>Usuario</Text>
 
-        <Icon name='edit'type="font-awesome"size={15} color='black'/>
+        
         <TextInput
           placeholder='usuario'
           style={style.input}
-          onChangeText={value => this.setState({ comment: value })} 
+          onChangeText={value => this.setState({ user: value })} 
         />
     
+        <Text></Text>
+        <Text></Text>
 
         <Button
-          icon={{
-          name: "arrow-right",
-          size: 15,
-          color: "white"
-        }}
-        title="Modificar"
+          icon={{ name: "arrow-right", size: 15, color: "white" }}
+          title="Modificar"
+          onPress={() => this.modificarSoda()}
         />
 
       <Icon 

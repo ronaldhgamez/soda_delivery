@@ -30,9 +30,14 @@ export default StyleSheet.create({
         color:'#fff'
     },
     input: {
-        height: 35,
-        margin: 12,
-        borderWidth: 1
-      }
+        borderWidth: 1,
+        height: hp('5%'),
+        width: wp('85%')
+      },
+    inputdescripcion: {
+        borderWidth: 1,
+        height: hp('10%'),
+        width: wp('85%')
+        }
 
 })
