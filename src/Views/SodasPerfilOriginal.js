@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, FlatList, TouchableOpacity,ActivityIndicator } from 'react-native'
-import { Avatar, Image, Icon} from 'react-native-elements'
+import { Text, View, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Avatar, Image, Icon } from 'react-native-elements'
 import styles from '../Styles/Sodas_Perfil_Original_Styles'
-import { _renderItem, _renderProduct} from '../Components/FlatListProducts';
+import { _renderItem, _renderProduct } from '../Components/FlatListProducts';
 
 export default class SodaPerfilOriginal extends Component {
 
@@ -27,7 +27,7 @@ export default class SodaPerfilOriginal extends Component {
             menu: [
                 {
                     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-                    title: 'Menu Entradas',
+                    title: 'Entradas',
                     products: [
                         {
                             idProduct: "sasdfasf",
@@ -47,7 +47,7 @@ export default class SodaPerfilOriginal extends Component {
                 },
                 {
                     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-                    title: 'Menu comidas',
+                    title: 'Comidas',
                     products: [
                         {
                             idProduct: "sasdfasasdf",
@@ -86,10 +86,10 @@ export default class SodaPerfilOriginal extends Component {
         return (
             <Text style={text_style}>
                 <Icon
-                    size={17}
+                    size={11}
                     name={iconName}
                     type={iconType}
-                    color='#517fa4'
+                    color='rgba(45, 107, 224, 0.9)'
                     onPress={() => { console.log("description: " + description) }}
                 />
                 {'\t' + description}
@@ -122,11 +122,19 @@ export default class SodaPerfilOriginal extends Component {
                         /* display soda's telephone number */
                         this.render_info('telephone', 'foundation', soda.tel, cardDescription)
                     }
+                    <View style={{ alignSelf: 'flex-end', marginRight: '2%', marginTop: '-14%' }}>
+                        <Icon
+                            raised
+                            size={26} name='edit'
+                            type='font-awesome'
+                            color='rgba(45, 107, 224, 0.9)'
+                            onPress={() => { console.log("editing...") }}>
+                        </Icon>
+                    </View>
                 </View>
-                
+
                 {/* Displays list of menus */}
                 <FlatList
-                    style={menu_container}
                     data={this.state.menu}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={_renderItem}

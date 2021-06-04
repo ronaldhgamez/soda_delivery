@@ -16,7 +16,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/*         <Stack.Screen
+        {/* <Stack.Screen
           name="PerfilSodaOriginal"
           component={PerfilSodaOriginal}
         /> */}
