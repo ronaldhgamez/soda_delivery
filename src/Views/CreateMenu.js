@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity,TextInput} from 'react-native'
+import {View, Text, TouchableOpacity, TextInput, Image, Button} from 'react-native'
 import style from '../Styles/CreateMenu_Style'
+
+import {addProduct} from '../Utilities/CreateMenuCon'
 
 export default class CreateMenu extends Component {
     constructor(props) {
@@ -9,6 +11,12 @@ export default class CreateMenu extends Component {
             product_fields:[]
         }
     }
+
+    save = async () => {
+        console.log(this.props.route.params.id+ "******************************");
+        //await this.state.product_fields.map(n => addProduct(this.props.route.params.id,  n.meta_name, n.meta_price))
+    }
+
     addProductField = () =>{
         this.setState({
             product_fields:[...this.state.product_fields,{meta_name:'value', meta_price:'value'}]
@@ -31,26 +39,28 @@ export default class CreateMenu extends Component {
         return (
             <View style={style.container}>
                 <Text style = {style.lblTittle}> Menú </Text>
-
                 {
-                    this.state.product_fields.map((productInput, key) =>{
+                    this.state.product_fields.map((productInput, k) =>{
                         {
                             return(
                                 <View style = {style.inputsContainer}>
                                     <View style = {[style.inputContainer]}>
                                         <TextInput
                                             style={style.input}
-                                            onChange={name =>{this.OnProductInputNameHandler(name,key)}}
+                                            onChange={name =>{this.OnProductInputNameHandler(name,k)}}
                                             placeholder={'Nombre del Producto'}/>
                                     </View>
                                     <View style = {[style.inputContainer]}>
                                         <TextInput
                                             style={style.input}
-                                            onChange={price => {this.OnProductInputPriceHandler(price,key)}}
+                                            onChange={price => {this.OnProductInputPriceHandler(price,k)}}
                                             placeholder={'Precio'}/>
                                     </View>
-                                    <TouchableOpacity onPress = {() => this.deleteDynamicField(key)} >
-                                        <Text style = {[style.addBtnText,{color: 'deeppink'}]}>Eliminar</Text>
+                                    <TouchableOpacity onPress = {() => this.deleteDynamicField(k)} >
+                                        <Text style = {style.addBtnText}>
+                                            {<Image
+                                            style={style.iconHistorial}
+                                            source={require('/soda_delivery-main/assets/eliminar.png')}/>}</Text>
                                     </TouchableOpacity>
                                 </View>
                             )
@@ -63,6 +73,11 @@ export default class CreateMenu extends Component {
                     onPress={()=>{this.addProductField()}}>
                     <Text style = {style.addBtnText}> Agregar Producto</Text>
                 </TouchableOpacity>
+
+                <Button
+                    title="Guardar"
+                    onPress={() => this.save()}
+                />
             </View>
         )
     }
