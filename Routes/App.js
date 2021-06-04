@@ -9,7 +9,6 @@ const Stack = createStackNavigator();
 import auxiliar from '../src/Views/auxiliar'
 import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
-import PerfilSoda from '../src/Views/PerfilSoda';
 import PerfilSodaOriginal from '../src/Views/SodasPerfilOriginal'
 import ModifySoda from '../src/Views/ModifySoda';
 
