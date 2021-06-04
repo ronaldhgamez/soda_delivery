@@ -99,7 +99,15 @@ export default StyleSheet.create({
     filtersMainContainer:{
         borderColor:'blue',
         borderWidth:1,
-        width:'98%',
-        flex:1
+        width:'95%',
+        flex:1,
+        justifyContent:'space-around',
+        alignContent:'center',
+        borderColor:'rgba(0,0,0,0.1)',
+        backgroundColor:'rgba(0,0,0,0.1)',
+    },
+    filtersText:{
+        textAlign:'center',
+        fontWeight:'bold'
     }
 })
