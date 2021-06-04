@@ -10,13 +10,18 @@ import auxiliar from '../src/Views/auxiliar'
 import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
 import PerfilSoda from '../src/Views/PerfilSoda';
+import PerfilSodaOriginal from '../src/Views/SodasPerfilOriginal'
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen 
-          name ="Auxiliar"
+        {/*         <Stack.Screen
+          name="PerfilSodaOriginal"
+          component={PerfilSodaOriginal}
+        /> */}
+        <Stack.Screen
+          name="Auxiliar"
           component={auxiliar}
         />
         <Stack.Screen
@@ -30,7 +35,7 @@ export default function App() {
         <Stack.Screen
           name="PerfilSoda"
           component={PerfilSoda}
-          //options={{title:'Ventana Crear Menú'}}
+        //options={{title:'Ventana Crear Menú'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
