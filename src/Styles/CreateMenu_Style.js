@@ -42,5 +42,10 @@ export default StyleSheet.create({
         height: hp(5),
         fontSize:wp(5),
         backgroundColor:'#f3f3f3'
+    },
+    iconHistorial:{
+        width: wp(6),
+        height: hp(6),
+        resizeMode: 'repeat'
     }
 })
