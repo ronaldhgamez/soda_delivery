@@ -23,13 +23,23 @@ export default StyleSheet.create({
         color:'#fff'
     },
     addBtnText:{
+        fontSize: wp(15),
+        color: '#fff',
+        textAlign:'center'
+    },
+    addBtnT:{
         fontSize: wp(6),
         color: '#fff',
         textAlign:'center'
     },
+    addBtnTextImg:{
+        fontSize: wp(24),
+        color: '#fff',
+        textAlign:'center',
+        marginRight:hp(2)
+    },
     inputsContainer:{
-        flexDirection: 'row',
-        padding: hp(1)
+        flexDirection: 'row'
     },
     inputContainer:{
         width: '40%',
@@ -44,8 +54,13 @@ export default StyleSheet.create({
         backgroundColor:'#f3f3f3'
     },
     iconHistorial:{
-        width: wp(6),
-        height: hp(6),
+        width: wp(7),
+        height: hp(7),
+        resizeMode: 'repeat'
+    },
+    iconHistorialImg:{
+        width: wp(9),
+        height: hp(9),
         resizeMode: 'repeat'
     }
 })
