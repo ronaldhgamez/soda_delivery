@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, TextInput, Image, Button} from 'react-nati
 import style from '../Styles/CreateMenu_Style'
 
 import { addProduct} from '../Utilities/CreateMenuCon'
+import {loadImageFromGallery} from "../Utilities/helper";
 
 export default class CreateMenu extends Component {
     constructor(props) {
@@ -34,6 +35,10 @@ export default class CreateMenu extends Component {
         this.state.product_fields.splice(index,1);
         this.setState({product_fields:this.state.product_fields});
     }
+    changePhoto = async () =>{
+        let result = await loadImageFromGallery([1,1])
+        console.log(result);
+    }
 
     render() {
         return (
@@ -44,6 +49,12 @@ export default class CreateMenu extends Component {
                     this.state.product_fields.map((productInput,k) =>{
                         return(
                             <View key = {k} style = {style.inputsContainer}>
+                                <TouchableOpacity onPress = {() => this.changePhoto()} >
+                                    <Text style = {[style.addBtnTextImg]}>
+                                        {<Image
+                                            style={style.iconHistorialImg}
+                                            source={require('../../assets/img.png')}/>}</Text>
+                                </TouchableOpacity>
                                 <View style = {[style.inputContainer]}>
                                     <TextInput
                                         style = {style.input}
@@ -71,7 +82,7 @@ export default class CreateMenu extends Component {
                 <TouchableOpacity
                     style={style.addBtn}
                     onPress={()=>{this.addProductField()}}>
-                    <Text style = {style.addBtnText}> Agregar Producto</Text>
+                    <Text style = {style.addBtnT}> Agregar Producto</Text>
                 </TouchableOpacity>
 
                 <Button
