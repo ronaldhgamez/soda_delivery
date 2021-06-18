@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {View, Text, TouchableOpacity, TextInput, Image, Button} from 'react-native'
 import style from '../Styles/CreateMenu_Style'
-
+import helper from '../Utilities/helper'
 import { addProduct} from '../Utilities/CreateMenuCon'
 import {loadImageFromGallery} from "../Utilities/helper";
 
@@ -39,7 +39,6 @@ export default class CreateMenu extends Component {
         let result = await loadImageFromGallery([1,1])
         console.log(result);
     }
-
     render() {
         return (
             <View style={style.container}>
