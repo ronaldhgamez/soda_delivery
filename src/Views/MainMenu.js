@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { View, ScrollView, TouchableHighlight, Image, TouchableOpacity } from 'react-native'
-import Ionicons from '@expo/vector-icons'
 import style from '../Styles/MainMenu_Style'
 import { Text, Icon, SearchBar } from 'react-native-elements';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 const helper = require('../Utilities/SodasHelper')
-import { Picker, Item } from '@react-native-community/picker'
+import { Picker} from '@react-native-community/picker'
 
 //const Tab = createBottomTabNavigator();
 
@@ -13,6 +12,7 @@ export default class MainMenu extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            userId:this.props.route.params.userId,
             sodas: [],
             sodasBackUp: [],
             search: '',
@@ -95,7 +95,7 @@ export default class MainMenu extends Component {
             let filterResult = []
             if (this.state.selectedAddressFilter !== "Todo" && this.state.selectedFoodFilter !== "Todo") {
                 this.state.sodasBackUp.map((soda) => {
-                    if (soda.exactAddress == this.state.selectedAddressFilter || soda.type == this.state.selectedFoodFilter) {
+                    if (soda.exactAddress == this.state.selectedAddressFilter && soda.type == this.state.selectedFoodFilter) {
                         filterResult.push(soda)
                     }
                 })
@@ -187,7 +187,7 @@ export default class MainMenu extends Component {
                         name='person'
                         size={50}
                         color='#bbbbbbe0'
-                        onPress={() => alert("Hacer ventana perfil de usuario")}
+                        onPress={() => this.props.navigation.navigate('ProfileScreen',{'userId':this.state.userId})}
                     />
                     <Icon
                         containerStyle={style.bottomIcon}

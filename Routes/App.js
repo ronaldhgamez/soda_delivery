@@ -11,12 +11,19 @@ import MainMenu from '../src/Views/MainMenu';
 import CreateMenu from '../src/Views/CreateMenu';
 import SodasPerfilOriginal from '../src/Views/SodasPerfilOriginal'
 import ModifySoda from '../src/Views/ModifySoda';
+import ProfileScreen from '../src/Views/ProfileScreen';
+import Login from '../src/Views/Login'
+import Register from '../src/Views/Register'
 
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+        />
         <Stack.Screen
           name="Auxiliar"
           component={auxiliar}
@@ -36,7 +43,14 @@ export default function App() {
         <Stack.Screen
           name="ModifySoda"
           component={ModifySoda}
-          //options={{title:'Ventana Crear Menú'}}
+        />
+        <Stack.Screen
+          name='ProfileScreen'
+          component={ProfileScreen}
+        />
+        <Stack.Screen
+          name='Register'
+          component={Register}
         />
       </Stack.Navigator>
     </NavigationContainer>
