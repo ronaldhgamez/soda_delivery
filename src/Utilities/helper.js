@@ -29,3 +29,4 @@ export const fileToBlob = async (path) =>{
     const blob = await file.blob()
     return blob;
 }
+
