@@ -54,13 +54,13 @@ export default class MainMenu extends Component {
 
     dinamycSoda = (soda, indice) => {
         return (
-            <TouchableOpacity onPress={() => alert("Hacer ventana perfil de soda")}>
+            <TouchableOpacity key={indice.toString()} onPress={() => alert("Hacer ventana perfil de soda")}>
                 <View style={style.dinamycMainContainer} >
                     <View style={style.dinamycLeftSide}>
                         <TouchableHighlight style={style.dinamycPintureContainer} >
                             <Image
                                 style={style.dinamycPicture}
-                                source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
+                                source={{ uri: 'https://images.vexels.com/media/users/3/181353/isolated/preview/1f0da6687abc94f096fef731e614292f-ilustraci-oacute-n-de-color-de-comida-de-m-eacute-xico-by-vexels.png' }}
                             />
                         </TouchableHighlight>
                     </View>

@@ -6,6 +6,9 @@ import { _renderItem, _renderProduct } from '../Components/FlatListProducts';
 import ModifySoda from './ModifySoda';
 import 'react-native-gesture-handler';
 
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+
 export default class SodaPerfilOriginal extends Component {
 
     constructor(props) {
@@ -102,48 +105,71 @@ export default class SodaPerfilOriginal extends Component {
     render() {
         let { menu_container, profile_card, cardImage, cardDescription, textSodaName } = styles;
         const soda = this.state.soda_data;
-        return (
-            <>
-                <Text style={{ marginTop: '1%' }}></Text>
 
-                {/* Soda biografy */}
-                <View style={profile_card}>
+        /*
+        function App() {
+            const { t } = useTranslation();
 
-                    {/* display soda's description and image */}
-                    <Image style={cardImage} source={{ uri: soda.image }} />
-                    <Text style={textSodaName}>{soda.description}</Text>
-                    {
-                        /* display soda's exact address */
-                        this.render_info('google-maps', 'material-community', soda.exactAddress, cardDescription)
-                    }
-                    {
-                        /* display soda's owner */
-                        this.render_info('person', 'fontisto', 'Propietario: ' + soda.owner, cardDescription)
-                    }
-                    {
-                        /* display soda's telephone number */
-                        this.render_info('telephone', 'foundation', soda.tel, cardDescription)
-                    }
-                    <View style={{ alignSelf: 'flex-end', marginRight: '2%', marginTop: '-14%' }}>
-                        <Icon
-                            raised
-                            size={26} name='edit'
-                            type='font-awesome'
-                            color='rgba(45, 107, 224, 0.9)'
-                            onPress={() => this.props.navigation.navigate('ModifySoda')}>
-                        </Icon>
+            function handleClick(lang) {
+                i18next.changeLanguage(lang)
+            }
+        */
+
+            return (
+                <>
+                    <Text style={{ marginTop: '1%' }}></Text>
+
+                    {/* Soda biografy */}
+                    <View style={profile_card}>
+
+                        {/* display soda's description and image */}
+                        <Image style={cardImage} source={{ uri: soda.image }} />
+                        <Text style={textSodaName}>{soda.description}</Text>
+                        {
+                            /* display soda's exact address */
+                            this.render_info('google-maps', 'material-community', soda.exactAddress, cardDescription)
+                        }
+                        {
+                            /* display soda's owner */
+                            this.render_info('person', 'fontisto', 'Propietario: ' + soda.owner, cardDescription)
+                        }
+                        {
+                            /* display soda's telephone number */
+                            this.render_info('telephone', 'foundation', soda.tel, cardDescription)
+                        }
+                        <View style={{ alignSelf: 'flex-end', marginRight: '2%', marginTop: '-14%' }}>
+                            <Icon
+                                raised
+                                size={26} name='edit'
+                                type='font-awesome'
+                                color='rgba(45, 107, 224, 0.9)'
+                                onPress={() => this.props.navigation.navigate('ModifySoda')}>
+                            </Icon>
+
+                        </View>
+
+                        <View style={{ alignSelf: 'flex-end', marginRight: '23%', marginTop: '-15%' }}>
+                            <Icon
+                                raised
+                                size={15} name='language'
+                                type='font-awesome'
+                                color='blue'>
+                            </Icon>
+
+                        </View>
+
                     </View>
-                </View>
 
-                {/* Displays list of menus */}
-                <FlatList
-                    data={this.state.menu}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={_renderItem}
+                    {/* Displays list of menus */}
+                    <FlatList
+                        data={this.state.menu}
+                        keyExtractor={(item, index) => index.toString()}
+                        renderItem={_renderItem}
                     //onScrollEndDrag={()=>{console.log("fin")}}
-                />
-                {/* <ActivityIndicator animating={false} size="large" color="#00ff00" /> */}
-            </>
-        );
-    }
+                    />
+                    {/* <ActivityIndicator animating={false} size="large" color="#00ff00" /> */}
+                </>
+            );
+        }
+   // }
 }
