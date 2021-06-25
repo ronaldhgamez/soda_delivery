@@ -20,7 +20,7 @@ export default class CreateMenu extends Component {
     save = async () => {
         console.log("------------------------")
         console.log(this.state.idMenu)
-        await this.state.product_fields.map(n => addProduct({idMenu: "00N2YooDtJNm8dh2orfD", imgUrl: n.meta_foto,name: n.meta_name, price: n.meta_price}));
+        await this.state.product_fields.map(n => addProduct({idMenu:"EJNE6r7UdlBBSInOyqSy", imgUrl: n.meta_foto,name: n.meta_name, price: n.meta_price}));
     }
 
     addProductField = () =>{
