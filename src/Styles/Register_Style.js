@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Dimensions } from "react-native";
+const altura= Dimensions.get('window').height
+const ancho= Dimensions.get('window').width
 
 export default StyleSheet.create({
     mainContainer: {
@@ -71,6 +73,48 @@ export default StyleSheet.create({
         height: '100%'
     },
     empresarioMainContainer:{
-
+        borderColor:'rgba(0,0,0,0.1)',
+        borderWidth:1,
+        borderRadius:15
+    },
+    usuarioMainContainer:{
+        borderColor:'rgba(0,0,0,0.1)',
+        borderWidth:1,
+        borderRadius:15
+    },
+    mediaContainer:{
+        height:'60%',
+        borderColor:'blue',
+        //borderWidth:2,
+        flexDirection:'row'
+    },
+    mediaContainerLeft:{
+        flex:1,
+        height:altura*0.15,
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:'1%'
+    },
+    mediaContainerRight:{
+        flex:1,
+        height:altura*0.15,
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        padding:'1%'
+    },
+    mediaImageLeft:{
+        borderColor:'rgba(0,0,0,0.1)',
+        borderWidth:1,
+        height:'95%',
+        width:'95%',
+    },
+    mediaImageRight:{
+        borderColor:'rgba(0,0,0,0.1)',
+        borderWidth:1,
+        height:'95%',
+        width:'95%',
+        padding:'2%'
     }
 })

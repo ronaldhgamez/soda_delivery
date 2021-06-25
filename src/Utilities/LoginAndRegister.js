@@ -32,6 +32,19 @@ async function registerUser(info){
         return false
     }
 }
+async function registerSoda(info){
+    let response= await fetch(`${uri}/api/registerUser`, {
+        method: "post",
+        body: JSON.stringify(info),
+        headers: { 'Content-type': 'application/json' }
+    });
+    let data = await response.json();
+    if (data.msg) {
+        return true
+    } else {
+        return false
+    }
+}
 export{
     login,
     registerUser
