@@ -13,7 +13,7 @@ export default class auxiliar extends Component {
     }
     //Create the menu
     createMenu = async () => {
-        let idInserted =await addMenu({idSoda:  "sodamartha", descripcion: "HELLO"});
+        let idInserted =await addMenu({cafe_username:  "sodamartha", descripcion: "HELLO"});
         this.setState({idInserted:idInserted});
     }
     render() {
