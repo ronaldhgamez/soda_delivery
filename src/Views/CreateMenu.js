@@ -6,6 +6,8 @@ import { addProduct} from '../Utilities/CreateMenuCon'
 import {fileToBlob, loadImageFromGallery} from "../Utilities/helper";
 import {storage} from '../Utilities/firebase';
 
+let cantPro = 0;
+
 export default class CreateMenu extends Component {
     constructor(props) {
         super(props)
@@ -16,14 +18,16 @@ export default class CreateMenu extends Component {
         }
     }
 
-    //FALTA QUE SE MANDE EL ID DEL MENU BIEN
     save = async () => {
-        console.log("------------------------")
-        console.log(this.state.idMenu)
-        await this.state.product_fields.map(n => addProduct({idMenu: "00N2YooDtJNm8dh2orfD", imgUrl: n.meta_foto,name: n.meta_name, price: n.meta_price}));
+        await this.state.product_fields.map(n => addProduct({id_menu: this.state.idMenu, imgUrl: n.meta_foto,name: n.meta_name, price: n.meta_price}));
+        for (let i = 0; i< cantPro; i++){
+            this.deleteDynamicField(0)
+        }
+        Alert.alert('¡Su menú se ha creado exitosamente!')
     }
 
     addProductField = () =>{
+        cantPro = cantPro + 1;
         this.setState({
             product_fields:[...this.state.product_fields,{meta_foto: 'value',meta_name:'value', meta_price:'value'}]
         })

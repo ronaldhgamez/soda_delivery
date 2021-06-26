@@ -12,7 +12,7 @@ async function addMenu(info) {
         body:JSON.stringify(info)
     })
     const data = await res.json()
-    return data.idInsertado;
+    return data.id_menu;
 }
 
 async function addProduct(info) {
