@@ -14,7 +14,8 @@ import ModifySoda from '../src/Views/ModifySoda';
 import ProfileScreen from '../src/Views/ProfileScreen';
 import Login from '../src/Views/Login'
 import Register from '../src/Views/Register'
-
+import Orders from '../src/Cafe_Views/Orders'
+import Menu from '../src/Cafe_Views/Menu'
 
 export default function App() {
   return (
@@ -51,6 +52,14 @@ export default function App() {
         <Stack.Screen
           name='Register'
           component={Register}
+        />
+        <Stack.Screen
+          name='Orders'
+          component={Orders}
+        />
+        <Stack.Screen
+          name='Menu'
+          component={Menu}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -23,6 +23,16 @@ export default class auxiliar extends Component {
                     onPress={() => this.props.navigation.navigate('SodasPerfilOriginal')}
                 />
 
+                <Button
+                    title="Pantalla de sodas"
+                    onPress={() => this.props.navigation.navigate('Orders')}
+                />
+
+                <Button
+                    title="Pantalla Menus"
+                    onPress={() => this.props.navigation.navigate('Menu', { "user": "ronaldhg" })}
+                />
+
                 <View>
                     <Icon
                         raised
