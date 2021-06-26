@@ -25,8 +25,8 @@ export default class ProfileScreen extends Component {
             editPasswordConfirm: null,
             editPhoneNumber: null,
             editDistrict:null,
-            province,
-            canton
+            province:null,
+            canton:null
         }
     }
     componentDidMount() {
