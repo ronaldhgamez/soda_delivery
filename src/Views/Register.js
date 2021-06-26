@@ -4,7 +4,8 @@ import style from '../Styles/Register_Style'
 import { Picker } from '@react-native-community/picker';
 import { Input } from 'react-native-elements'
 const util = require('../Utilities/LoginAndRegister')
-import { loadImageFromGallery } from "../Utilities/helper";
+import { fileToBlob, loadImageFromGallery } from "../Utilities/helper";
+import { storage } from '../Utilities/firebase';
 
 
 export default class Register extends Component {
@@ -18,17 +19,26 @@ export default class Register extends Component {
             password: null,
             idCafe: null,
             idDistrito: 1,
+            district: "",
             passwordConfirm: null,
             exactAddress: null,
-            profileIMage: 'https://image.flaticon.com/icons/png/512/892/892781.png',
+            profileImage: 'https://image.flaticon.com/icons/png/512/892/892781.png',
             phoneNumber: null,
             userId: null,
             owner: null,
             description: null,
             typeService: null,
+            provinces: [],
+            cantons: [],
+            districts: [],
+            selectedProvince: "",
+            selectedCanton: "",
+            selectedDistrict: ""
         }
     }
-
+    componentDidMount(){
+        this.getProvinces();
+    }
     saveNewUser = () => {
         console.log(this.state.selectedPicker)
         if (this.state.selectedPicker == "usuario")
@@ -36,12 +46,56 @@ export default class Register extends Component {
         //else if (this.state.selectedPicker == 'empresario')
         //this.saveUserEmpresario
     }
-
-    changePicture = async () => {
-        let result = await loadImageFromGallery([1, 1])
-        console.log(result);
+    getProvinces = async () => {
+        let provinces = await util.getProvinces();
+        let allProvinces = []
+        for (key in provinces) {
+            allProvinces.push(provinces[key]);
+        }
+        this.setState({ provinces: allProvinces })
     }
 
+    changePicture = async (index) => {
+        //Open the gallery and choose the image or video
+        const result = await loadImageFromGallery([1, 1])
+
+        //Get the name of the file
+        let imgName = result.image.substring(result.image.lastIndexOf('/') + 1);
+
+        //The file is convert to blob
+        let a = await fileToBlob(result.image);
+        //The blob is upload to the storage
+        const uploadTask = storage.ref(`avatars/${imgName}`).put(a);
+        uploadTask.on("state_changed",
+            snapshot => { },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref("avatars")
+                    .child(`${imgName}`)
+                    .getDownloadURL()
+                    .then(url => {
+                        this.setState({ profileImage: url })
+                    })
+            })
+    }
+    onChangeProvince = (value) => {
+        this.setState({selectedProvince:value})
+    }
+    onChangeCanton = (value) => {
+
+    }
+    onChangeDistrict = (value) => {
+
+    }
+    onUpdateCantons = (idProvince) => {
+
+    }
+    onUpdateDistrict = (idCanton) => {
+
+    }
     saveUserUsuario = async () => {
 
         if (!this.state.name ||
@@ -111,6 +165,10 @@ export default class Register extends Component {
         }
     }
     render() {
+        let myProvinces = []
+        this.state.provinces.map((province, index) => {
+            myProvinces.push(<Picker.Item label={province} value={province} key={index} />)
+        })
         return (
             <View style={style.mainContainer}>
                 <View style={style.upperContainer}>
@@ -118,7 +176,7 @@ export default class Register extends Component {
                         <TouchableHighlight style={{ width: '100%', height: '100%' }} onPress={this.changePicture}>
                             <Image
                                 style={style.imageStyle}
-                                source={{ uri: this.state.profileIMage }}
+                                source={{ uri: this.state.profileImage }}
                             />
 
                         </TouchableHighlight>
@@ -157,8 +215,12 @@ export default class Register extends Component {
                             <Input
                                 label={"Número de teléfono"}
                                 onChangeText={value => this.setState({ phoneNumber: value })}
-
                             />
+                            <Picker
+                                selectedValue={this.state.selectedProvince}
+                                onValueChange={(value) => this.onChangeProvince(value)}>
+                                {myProvinces}
+                            </Picker>
                             <Input
                                 label={"Dirección exacta"}
                                 onChangeText={value => this.setState({ exactAddress: value })}
@@ -231,12 +293,12 @@ export default class Register extends Component {
                             <View style={style.mediaContainer}>
                                 <View style={style.mediaContainerLeft}>
                                     <TouchableHighlight style={style.mediaImageLeft}>
-                                        <Image style={{resizeMode:'contain',width:'100%',height:'100%'}} source={{uri : "https://image.flaticon.com/icons/png/512/685/685685.png"}} />
+                                        <Image style={{ resizeMode: 'contain', width: '100%', height: '100%' }} source={{ uri: "https://image.flaticon.com/icons/png/512/685/685685.png" }} />
                                     </TouchableHighlight>
                                 </View>
                                 <View style={style.mediaContainerRight}>
                                     <TouchableHighlight style={style.mediaImageRight}>
-                                        <Image style={{resizeMode:'contain',width:'100%',height:'100%'}} source={{uri : "https://image.flaticon.com/icons/png/512/1294/1294320.png"}} />
+                                        <Image style={{ resizeMode: 'contain', width: '100%', height: '100%' }} source={{ uri: "https://image.flaticon.com/icons/png/512/1294/1294320.png" }} />
                                     </TouchableHighlight>
                                 </View>
                             </View>

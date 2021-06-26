@@ -5,10 +5,10 @@ import Constants from "expo-constants";
 const { manifest } = Constants;
 const uri = `http://${manifest.debuggerHost.split(':').shift()}:4000` //comment this if testing on PC
 
-async function getUserInfo(userId) {
+async function getUserInfo(userName) {
     let response = await fetch(`${uri}/api/getClientData`, {
         method: "post",
-        body: JSON.stringify({ idUser: userId }),
+        body: JSON.stringify({ userName: userName }),
         headers: { 'Content-type': 'application/json' }
     });
     let data = await response.json();
@@ -19,10 +19,10 @@ async function getUserInfo(userId) {
     }
 }
 
-async function getUserPhone(userId) {
+async function getUserPhone(userName) {
     let response = await fetch(`${uri}/api/getClientPhone`, {
         method: "post",
-        body: JSON.stringify({ idUser: userId }),
+        body: JSON.stringify({ userName: userName }),
         headers: { 'Content-type': 'application/json' }
     });
     let data = await response.json();
