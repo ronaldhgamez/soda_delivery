@@ -44,7 +44,6 @@ const getInformation = async (cafe_username) => {
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
         body: JSON.stringify({ "cafe_username": cafe_username })
     })
-    console.log("---->");
     return await response.json();
 }
 export {
