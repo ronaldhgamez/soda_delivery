@@ -12,7 +12,7 @@ export default class MainMenu extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            userId:this.props.route.params.userId,
+            userName:this.props.route.params.userName,
             sodas: [],
             sodasBackUp: [],
             search: '',
@@ -42,8 +42,8 @@ export default class MainMenu extends Component {
             if (!foodLst.includes(sodas[key].type)) {
                 foodLst.push(sodas[key].type)
             }
-            if (!addressLst.includes(sodas[key].exactAddress)) {
-                addressLst.push(sodas[key].exactAddress)
+            if (!addressLst.includes(sodas[key].district)) {
+                addressLst.push(sodas[key].district)
             }
         }
         this.setState({ sodas: sodaLst, allAddresses: addressLst, foodTypes: foodLst, sodasBackUp: sodaLst })
@@ -67,7 +67,7 @@ export default class MainMenu extends Component {
                     <View style={style.dinamycRightSide}>
                         <Text style={style.dinamycData}>{soda.name}</Text>
                         <Text style={style.dinamycData}>{soda.type}</Text>
-                        <Text style={style.dinamycData}>{soda.exactAddress}</Text>
+                        <Text style={style.dinamycData}>{soda.exact_direction}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -95,13 +95,13 @@ export default class MainMenu extends Component {
             let filterResult = []
             if (this.state.selectedAddressFilter !== "Todo" && this.state.selectedFoodFilter !== "Todo") {
                 this.state.sodasBackUp.map((soda) => {
-                    if (soda.exactAddress == this.state.selectedAddressFilter && soda.type == this.state.selectedFoodFilter) {
+                    if (soda.district == this.state.selectedAddressFilter && soda.type == this.state.selectedFoodFilter) {
                         filterResult.push(soda)
                     }
                 })
             } else if (this.state.selectedAddressFilter !== "Todo") {
                 this.state.sodasBackUp.map((soda) => {
-                    if (soda.exactAddress == this.state.selectedAddressFilter) {
+                    if (soda.district == this.state.selectedAddressFilter) {
                         filterResult.push(soda)
                     }
                 })
@@ -187,7 +187,7 @@ export default class MainMenu extends Component {
                         name='person'
                         size={50}
                         color='#bbbbbbe0'
-                        onPress={() => this.props.navigation.navigate('ProfileScreen',{'userId':this.state.userId})}
+                        onPress={() => this.props.navigation.navigate('ProfileScreen',{'userName':this.state.userName})}
                     />
                     <Icon
                         containerStyle={style.bottomIcon}

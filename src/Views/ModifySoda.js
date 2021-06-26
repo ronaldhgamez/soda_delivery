@@ -2,19 +2,19 @@ import React, { Component, useState } from 'react';
 import { View, Picker, TextInput } from 'react-native';
 import style from '../Styles/ModifySoda_Style';
 import { Text, Icon, Button } from 'react-native-elements';
-import sodasFuntion from '../Components/sodasFuntion'
 import { addMenu } from "../Utilities/CreateMenuCon";
+import { getInformation, modifySodas } from '../Utilities/SodasHelper';
 
 class ModifySoda extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nombre: "",
-      dueno: "",
-      descrip: "",
-      direccion: "",
-      tipoComida: "",
-      user: "",
+      description: '',
+      exactAddress: '',
+      names: '',
+      owner: '',
+      type: '',
+      cafe_username: 'sodamartha',
       spinner: false,
       value: 0,
       PickerSelectedVal: '',
@@ -22,19 +22,30 @@ class ModifySoda extends Component {
     };
   }
 
-  //------------
-  modificarSoda = (nombre, dueno, descripcion, direccion, tipoComida, usuario) => {
-    console.log("entra");
-    if (true) {
-      console.log('Soda modificada');
-    } else {
-      console.log("invalido")
-    }
+  async componentDidMount() {
+    console.log("getting data");
+    const data = await getInformation(this.state.cafe_username);
+    console.log("-------");
+    console.log(data);
   }
 
-  eliminar = () => {
-    //const res = await db.collection('cafes').doc('DC').delete();
+  //----------------------------------------------------------------
+  //----------               ACCIONES                 --------------
+  //----------------------------------------------------------------
+
+  modify = async () => {
+    const {description, exact_direction, names, owner, type, cafe_username } = this.state;
+    console.log(description + exact_direction + names + owner)
+    const updated = await modifySodas(description, exact_direction,names,owner, type, cafe_username);
+    console.log(updated);
   }
+
+  delete = async()=>{
+    console.log("borrando");
+  }
+
+  //----------------------------------------------------------------
+  //----------------------------------------------------------------
 
   //Create the menu
   createMenu = async () => {
@@ -53,7 +64,7 @@ class ModifySoda extends Component {
 
         <TextInput placeholder='Nombre - soda'
           style={style.input}
-          onChangeText={value => this.setState({ nombre: value })}
+          onChangeText={value => this.setState({ names: value })}
         />
 
         <Text>Dueño</Text>
@@ -62,7 +73,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Propietario'
           style={style.input}
-          onChangeText={value => this.setState({ dueno: value })}
+          onChangeText={value => this.setState({ owner: value })}
         />
 
         <Text>Descripcion</Text>
@@ -71,7 +82,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Descripcion'
           style={style.inputdescripcion}
-          onChangeText={value => this.setState({ descrip: value })}
+          onChangeText={value => this.setState({ description: value })}
         />
 
         <Text>Direccion</Text>
@@ -80,7 +91,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Direccion exacta'
           style={style.inputdescripcion}
-          onChangeText={value => this.setState({ direccion: value })}
+          onChangeText={value => this.setState({ exact_direction: value })}
         />
 
         <Text>Tipo de Comida</Text>
@@ -89,16 +100,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Tipo comida'
           style={style.input}
-          onChangeText={value => this.setState({ tipoComida: value })}
-        />
-
-        <Text>Usuario</Text>
-
-
-        <TextInput
-          placeholder='usuario'
-          style={style.input}
-          onChangeText={value => this.setState({ user: value })}
+          onChangeText={value => this.setState({ type: value })}
         />
 
         <Text></Text>
@@ -107,7 +109,7 @@ class ModifySoda extends Component {
         <Button
           icon={{ name: "arrow-right", size: 15, color: "white" }}
           title="Modificar"
-          onPress={() => this.modificarSoda()}
+          onPress={() => this.modify()}
         />
         <Text></Text>
         <Button

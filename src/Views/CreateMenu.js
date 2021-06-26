@@ -1,26 +1,35 @@
-import React, { Component } from 'react'
-import {View, Text, TouchableOpacity, TextInput, Image, Button} from 'react-native'
+import React, {Component, useState} from 'react'
+import {View, Text, TouchableOpacity, TextInput, Image, Button,Alert, Platform} from 'react-native'
 import style from '../Styles/CreateMenu_Style'
-import helper from '../Utilities/helper'
+
 import { addProduct} from '../Utilities/CreateMenuCon'
-import {loadImageFromGallery} from "../Utilities/helper";
+import {fileToBlob, loadImageFromGallery} from "../Utilities/helper";
+import {storage} from '../Utilities/firebase';
+
+let cantPro = 0;
 
 export default class CreateMenu extends Component {
     constructor(props) {
         super(props)
         this.state = {
             product_fields:[],
-            idMenu : this.props.route.params.idMenu
+            idMenu : this.props.route.params.item,
+            photoURL : 'https://firebasestorage.googleapis.com/v0/b/sodas-db-nodejs.appspot.com/o/avatars%2Fimg.png?alt=media&token=d556ce19-d6cf-4e2d-bafd-c36db1872cf5'
         }
     }
 
     save = async () => {
-        await this.state.product_fields.map(n => addProduct({idMenu: "ccnySGMUiQPDEQlGBbAJ", name: n.meta_name, price: n.meta_price}));
+        await this.state.product_fields.map(n => addProduct({id_menu: this.state.idMenu, imgUrl: n.meta_foto,name: n.meta_name, price: n.meta_price}));
+        for (let i = 0; i< cantPro; i++){
+            this.deleteDynamicField(0)
+        }
+        Alert.alert('¡Su menú se ha creado exitosamente!')
     }
 
     addProductField = () =>{
+        cantPro = cantPro + 1;
         this.setState({
-            product_fields:[...this.state.product_fields,{meta_name:'value', meta_price:'value'}]
+            product_fields:[...this.state.product_fields,{meta_foto: 'value',meta_name:'value', meta_price:'value'}]
         })
     }
     OnProductInputNameHandler = (value,index) => {
@@ -35,24 +44,61 @@ export default class CreateMenu extends Component {
         this.state.product_fields.splice(index,1);
         this.setState({product_fields:this.state.product_fields});
     }
-    changePhoto = async () =>{
-        let result = await loadImageFromGallery([1,1])
-        console.log(result);
+    //Choose the image and save in the firebase's storage
+    changePhoto = async (index) =>{
+        //Open the gallery and choose the image or video
+        const result  = await loadImageFromGallery([1,1])
+
+        //Get the name of the file
+        let imgName = result.image.substring(result.image.lastIndexOf('/')+1);
+
+        //The file is convert to blob
+        let a = await fileToBlob(result.image);
+
+        //The blob is upload to the storage
+        const uploadTask = storage.ref(`avatars/${imgName}`).put(a);
+        uploadTask.on("state_changed",
+            snapshot => {},
+            error => {
+            console.log(error);
+            },
+            () =>{
+            storage
+                .ref("avatars")
+                .child(`${imgName}`)
+                .getDownloadURL()
+                .then(url =>{
+                    this.state.product_fields[index].meta_foto = url;
+                    this.setState({product_fields:this.state.product_fields});
+                })
+        })
     }
+
+    //Function for control the photo in each space in the list
+    chooseURL = (index) =>{
+        if ( this.state.product_fields[index].meta_foto !== "value"){
+            return this.state.product_fields[index].meta_foto;
+        }else {
+            return this.state.photoURL;
+        }
+    }
+
     render() {
         return (
             <View style={style.container}>
                 <Text style = {style.lblTittle}> Menú </Text>
-
                 {
                     this.state.product_fields.map((productInput,k) =>{
                         return(
                             <View key = {k} style = {style.inputsContainer}>
-                                <TouchableOpacity onPress = {() => this.changePhoto()} >
+                                <TouchableOpacity onPress = {() => this.changePhoto(k)} >
                                     <Text style = {[style.addBtnTextImg]}>
                                         {<Image
                                             style={style.iconHistorialImg}
-                                            source={require('../../assets/img.png')}/>}</Text>
+                                            source={{
+                                                uri: `${this.chooseURL(k)}`,
+                                            }}/>}
+                                    </Text>
                                 </TouchableOpacity>
                                 <View style = {[style.inputContainer]}>
                                     <TextInput

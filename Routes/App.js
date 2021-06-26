@@ -14,8 +14,15 @@ import ModifySoda from '../src/Views/ModifySoda';
 import ProfileScreen from '../src/Views/ProfileScreen';
 import Login from '../src/Views/Login'
 import Register from '../src/Views/Register'
+<<<<<<< HEAD
 import Orders from '../src/Cafe_Views/Orders'
 import Menu from '../src/Cafe_Views/Menu'
+=======
+
+import {LogBox} from 'react-native'
+
+LogBox.ignoreAllLogs()
+>>>>>>> f21ad4acaa978e32a922b0f89c7ffd77b90de8f6
 
 export default function App() {
   return (

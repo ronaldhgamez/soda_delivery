@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import { Avatar, Image, Icon } from 'react-native-elements'
+import { addMenu } from '../Utilities/CreateMenuCon'
 
 export default class auxiliar extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            idInserted : ''
+        }
+    }
+    //Create the menu
+    createMenu = async () => {
+        let idInserted =await addMenu({cafe_username:  "sodamartha", descripcion: "HELLO"});
+        this.setState({idInserted:idInserted});
+    }
     render() {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', alignContent: 'center', flex: 1 }}>
@@ -14,9 +26,9 @@ export default class auxiliar extends Component {
                     title="MainMenu"
                     onPress={() => this.props.navigation.navigate('MainMenu')}
                 />
-                <Button
+                 <Button
                     title="Crear Menú"
-                    onPress={() => this.props.navigation.navigate('CreateMenu')}
+                    onPress={() =>{this.createMenu(), this.props.navigation.navigate('CreateMenu', {item:this.state.idInserted })}}
                 />
                 <Button
                     title="Sodas"

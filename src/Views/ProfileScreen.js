@@ -9,11 +9,11 @@ export default class ProfileScreen extends Component {
         super(props)
         this.state = {
             editing: false,// para editar el perfil del usuario
-            myUserId: this.props.route.params.userId,
+            myUserName: this.props.route.params.userName,
             name: null,
             lastName: null,
             exactAddress: null,
-            idDistrito: null,
+            district: null,
             user: null,
             password: null,
             phoneNumber: null,
@@ -23,35 +23,37 @@ export default class ProfileScreen extends Component {
             editExactAddress: null,
             editPassword: null,
             editPasswordConfirm: null,
-            editPhoneNumber: null
+            editPhoneNumber: null,
+            editDistrict:null,
+            province:null,
+            canton:null
         }
     }
     componentDidMount() {
         this.getUserInfo()
     }
     getUserInfo = async () => {
-        console.log(this.state.myUserId)
-        let data = await util.getUserInfo(this.state.myUserId)
+        let data = await util.getUserInfo(this.state.myUserName)
         if (!data) {
             alert("Ha ocurrido un error cargar sus datos.")
             this.props.navigation.navigate("MainMenu")
         } else {
             this.setState({
-                name: data.nombre,
-                lastName: data.apellidos,
-                exactAddress: data.direccionExacta,
-                idDistrito: data.idDistrito,
-                profileImageURL: data.imagenPerfil,
-                user: data.usuario,
-                password: data.contrasena,
+                name: data.name,
+                lastName: data.lastname,
+                exactAddress: data.exact_direction,
+                district: data.district,
+                profileImageURL: data.img_ulr,
+                user: data.user,
+                password: data.pass,
             })
-            let telefonoData = await util.getUserPhone(this.state.myUserId)
+            let telefonoData = await util.getUserPhone(this.state.myUserName)
             if (!telefonoData) {
                 alert("Ha ocurrido un error cargar sus datos.")
                 this.props.navigation.navigate("MainMenu")
             } else {
                 console.log(telefonoData)
-                this.setState({ phoneNumber: telefonoData.telefono })
+                this.setState({ phoneNumber: telefonoData.phoneNumber })
             }
         }
     }
@@ -61,28 +63,28 @@ export default class ProfileScreen extends Component {
             !this.state.editExactAddress ||
             !this.state.editPassword ||
             !this.state.editPasswordConfirm ||
-            !this.state.editPhoneNumber) {
+            !this.state.editPhoneNumber ||
+            !this.state.editDistrict) {
             alert("Información incompleta")
-        }else{
-            if(this.state.editPassword!==this.state.editPasswordConfirm || this.state.editPassword!==this.state.password){
+        } else {
+            if (this.state.editPassword !== this.state.editPasswordConfirm || this.state.editPassword !== this.state.password) {
                 alert("Las contraseñas no coinciden")
-            }else{
-                data={
-                    userId:this.state.myUserId,
-                    nombre:this.state.editName,
-                    apellidos:this.state.editLastName,
-                    direccionExacta:this.state.editExactAddress,
-                    telefono:this.state.editPhoneNumber,
-                    contrasena:this.state.editPassword,
-                    idDistrito:this.state.idDistrito,
-                    imagenPerfil:this.state.profileImageURL,
-                    usuario:this.state.user
+            } else {
+                data = {
+                    name: this.state.editName,
+                    lastname: this.state.editLastName,
+                    exact_direction: this.state.editExactAddress,
+                    phoneNumber: this.state.editPhoneNumber,
+                    pass: this.state.editPassword,
+                    district: this.state.district,
+                    img_ulr: this.state.profileImageURL,
+                    user: this.state.user
                 }
-                let res=await util.updateUserInfo(data)
-                if(res){
+                let res = await util.updateUserInfo(data)
+                if (res) {
                     alert("Información actualizada con éxito")
                     this.props.navigation.navigate("MainMenu")
-                }else{
+                } else {
                     alert("Error, los datos no fueron actualizados")
                 }
             }
@@ -113,6 +115,12 @@ export default class ProfileScreen extends Component {
                         disabled={!this.state.editing}
                         placeholder={this.state.name}
                         onChangeText={value => this.setState({ editName: value })}
+                    />
+                    <Input
+                        label={"Distrito"}
+                        disabled={!this.state.editing}
+                        placeholder={this.state.district}
+                        onChangeText={value => this.setState({ editDistrict: value })}
                     />
                     <Input
                         label={"Apellidos"}
