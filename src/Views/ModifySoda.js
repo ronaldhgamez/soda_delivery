@@ -9,12 +9,12 @@ class ModifySoda extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      cafe_username: 'sodamartha',
       description: '',
-      exactAddress: '',
+      exact_direction: '',
       names: '',
       owner: '',
       type: '',
-      cafe_username: 'sodamartha',
       spinner: false,
       value: 0,
       PickerSelectedVal: '',
@@ -23,10 +23,14 @@ class ModifySoda extends Component {
   }
 
   async componentDidMount() {
-    console.log("getting data");
     const data = await getInformation(this.state.cafe_username);
-    console.log("-------");
-    console.log(data);
+    this.setState({
+      "owner": data.owner,
+      "names": data.name,
+      "description": data.description,
+      "type": data.type,
+      "exact_direction": data.exact_direction
+    });
   }
 
   //----------------------------------------------------------------
@@ -35,9 +39,8 @@ class ModifySoda extends Component {
 
   modify = async () => {
     const {description, exact_direction, names, owner, type, cafe_username } = this.state;
-    console.log(description + exact_direction + names + owner)
     const updated = await modifySodas(description, exact_direction,names,owner, type, cafe_username);
-    console.log(updated);
+    console.log("updated: " + updated);
   }
 
   delete = async()=>{
@@ -64,6 +67,7 @@ class ModifySoda extends Component {
 
         <TextInput placeholder='Nombre - soda'
           style={style.input}
+          value={this.state.names}
           onChangeText={value => this.setState({ names: value })}
         />
 
@@ -73,6 +77,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Propietario'
           style={style.input}
+          value={this.state.owner}
           onChangeText={value => this.setState({ owner: value })}
         />
 
@@ -82,6 +87,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Descripcion'
           style={style.inputdescripcion}
+          value={this.state.description}
           onChangeText={value => this.setState({ description: value })}
         />
 
@@ -91,6 +97,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Direccion exacta'
           style={style.inputdescripcion}
+          value={this.state.exact_direction}
           onChangeText={value => this.setState({ exact_direction: value })}
         />
 
@@ -100,6 +107,7 @@ class ModifySoda extends Component {
         <TextInput
           placeholder='Tipo comida'
           style={style.input}
+          value={this.state.type}
           onChangeText={value => this.setState({ type: value })}
         />
 
