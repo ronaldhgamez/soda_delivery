@@ -12,11 +12,20 @@ async function login(userName,password){
         headers: { 'Content-type': 'application/json' }
     });
     let data = await response.json();
-    if (data.msg !== false) {
-        return data.msg;
+    if (data.msg) {
+        return true;
     } else {
-        return false
+        return false;
     }
+}
+
+async function getProvinces(){
+    let data= await fetch(`https://ubicaciones.paginasweb.cr/provincias.json`);
+    let datos=await data.json()
+    return datos;
+}
+async function getCantons(idProvince){
+
 }
 
 async function registerUser(info){
@@ -32,7 +41,21 @@ async function registerUser(info){
         return false
     }
 }
+async function registerSoda(info){
+    let response= await fetch(`${uri}/api/registerUser`, {
+        method: "post",
+        body: JSON.stringify(info),
+        headers: { 'Content-type': 'application/json' }
+    });
+    let data = await response.json();
+    if (data.msg) {
+        return true
+    } else {
+        return false
+    }
+}
 export{
     login,
-    registerUser
+    registerUser,
+    getProvinces
 }

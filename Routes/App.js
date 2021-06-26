@@ -15,6 +15,9 @@ import ProfileScreen from '../src/Views/ProfileScreen';
 import Login from '../src/Views/Login'
 import Register from '../src/Views/Register'
 
+import {LogBox} from 'react-native'
+
+LogBox.ignoreAllLogs()
 
 export default function App() {
   return (

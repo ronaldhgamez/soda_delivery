@@ -21,8 +21,8 @@ export default class Register extends Component {
             if (!response) {
                 alert("El usuario no existe o la contraseña es incorrecta")
             } else {
-                this.setState({ userId: response })
-                this.props.navigation.navigate("MainMenu", { userId: response })
+                this.setState({ userId: this.state.userName })
+                this.props.navigation.navigate("MainMenu", { userName: this.state.userName })
             }
         }
     }
