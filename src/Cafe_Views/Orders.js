@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, Button, CheckBox } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { getOrders, changeOrderState } from './Cafe_Consults';
+import { getOrders, changeOrderState, getNextState } from './Cafe_Consults';
 
 export default function Orders() {
 
-    const [cafe, setCafe] = useState('usuariocafe2');
+    const [cafe_username, setCafe] = useState('sodamartha');
     const [orders, setOrders] = useState([]);
     const [ordersChange, setOrdersChange] = useState(false);
     // Combobox options
@@ -25,7 +25,7 @@ export default function Orders() {
 
     useEffect(() => {
         (async () => {
-            const data = await getOrders(cafe);
+            const data = await getOrders(cafe_username);
             setOrders(data);
             setLoading(!isLoading);
             setOrdersChange(!ordersChange);
@@ -48,13 +48,13 @@ export default function Orders() {
         var icon;
         switch (item.state) {
             case 'pending':
-                icon = <Icon reverse raised size={25} color='red' name='timer' type='material-icons' />
+                icon = <Icon reverse size={23} color='orangered' name='timer' type='material-icons' />
                 break
             case 'delivered':
-                icon = <Icon reverse raised size={25} color='yellowgreen' name='check' type='material-icons' />
+                icon = <Icon reverse size={23} color='yellowgreen' name='check' type='material-icons' />
                 break
             default:
-                icon = <Icon reverse raised size={25} color='dodgerblue' name='chef-hat' type='material-community' />
+                icon = <Icon reverse size={23} color='dodgerblue' name='chef-hat' type='material-community' />
                 break
         }
 
@@ -62,26 +62,40 @@ export default function Orders() {
             <View key={index.toString()} style={product_card} >
                 {icon}
                 <View style={{ flexDirection: 'column', margin: '4%' }}>
-
-                    <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{"cliente: " + item.client}</Text>
-                    <Text style={{ fontSize: 11, fontStyle: 'italic' }}>{"$ " + item.total}</Text>
+                    <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{"Cliente: " + item.user_data.name + " " + item.user_data.lastname}</Text>
+                    <Text style={{ fontSize: 11, fontStyle: 'italic' }}>{"Dirección: " + item.user_data.exact_direction}</Text>
                     <Text style={{ fontSize: 11, fontStyle: 'italic' }}>{item.datetime}</Text>
-                    <Text style={{ fontSize: 11, fontStyle: 'italic' }}>{item.state}</Text>
+                    <Text style={{ fontSize: 11, fontStyle: 'italic' }}>{"₡ " + item.total}</Text>
 
-                    <Button
-                        onPress={async () => {
-                            item.state = ((state) => {
-                                if (state === 'delivered') return 'pending';
-                                return (state === 'pending') ? 'preparing' : 'delivered';
-                            })(item.state)
-                            await changeOrderState(item.id, item.state);
-                            setOrdersChange(!ordersChange);
-                        }}
-                        title="Cambiar estado"
-                        color="rgba(45, 107, 224, 0.9)"
-                    />
+                    {/* VIEW BUTTONS */}
+                    <View style={{ flexDirection: 'row' }}>
+                        {/* EXCHANGE BUTTON */}
+                        <TouchableOpacity style={{ flexDirection: 'column', marginLeft: '5%' }}>
+                            <Icon raised size={20} name='exchange' type='font-awesome' color={getNextState(item.state).color}
+                                onPress={async () => {
+                                    const ant = item.state;
+                                    item.state = ((state) => {
+                                        if (state === 'delivered') return 'pending';
+                                        return (state === 'pending') ? 'preparing' : 'delivered';
+                                    })(item.state)
+                                    await changeOrderState(item.id_order, item.state);
+                                    setOrdersChange(!ordersChange);
+                                }}
+                            />
+                            <Text style={{ fontSize: 10, textAlign: 'center', fontWeight: 'bold' }}>{"Pasar a\n" + getNextState(item.state).state}</Text>
+                        </TouchableOpacity>
+
+                        {/* SEE DETAILS OF ORDER BUTTON */}
+                        <TouchableOpacity style={{ flexDirection: 'column', marginLeft: '12%' }}>
+                            <Icon raised size={20} name='list-1' type='fontisto' color="gray"
+                                onPress={async () => {
+
+                                }}
+                            />
+                            <Text style={{ fontSize: 10, textAlign: 'center', fontWeight: 'bold' }}>{"Detalles\npedidos"}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-
             </View>
         </>
     }
@@ -100,7 +114,7 @@ export default function Orders() {
 
     return <>
         <Text style={{ paddingTop: StatusBar.currentHeight }}></Text>
-        <Text style={{ fontSize: 22, fontWeight: 'bold', alignSelf: 'center' }}>{"Filtro de pedidos"}</Text>
+        <Text style={styles.highlight_text}>{"Filtro de pedidos"}</Text>
 
         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
             {render_combobox("Pendientes", pendingCheckBox, setPending)}
@@ -110,7 +124,7 @@ export default function Orders() {
 
         {(isLoading) && (
             <View style={{ alignContent: 'center', backgroundColor: 'white' }}>
-                <ActivityIndicator size="large" color="deeppink" />
+                <ActivityIndicator size="large" color="#12e4af" />
             </View>
         )}
 
@@ -139,4 +153,7 @@ const styles = StyleSheet.create({
         borderColor: 'azure',
         elevation: 2,
     },
+    highlight_text: {
+        fontSize: 22, fontWeight: 'bold', alignSelf: 'center'
+    }
 });
