@@ -60,14 +60,14 @@ export default class MainMenu extends Component {
                         <TouchableHighlight style={style.dinamycPintureContainer} >
                             <Image
                                 style={style.dinamycPicture}
-                                source={{ uri: 'https://images.vexels.com/media/users/3/181353/isolated/preview/1f0da6687abc94f096fef731e614292f-ilustraci-oacute-n-de-color-de-comida-de-m-eacute-xico-by-vexels.png' }}
+                                source={{ uri: soda.img_url }}
                             />
                         </TouchableHighlight>
                     </View>
                     <View style={style.dinamycRightSide}>
                         <Text style={style.dinamycData}>{soda.name}</Text>
                         <Text style={style.dinamycData}>{soda.type}</Text>
-                        <Text style={style.dinamycData}>{soda.exact_direction}</Text>
+                        <Text style={style.dinamycData}>{soda.district+", "+soda.canton}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

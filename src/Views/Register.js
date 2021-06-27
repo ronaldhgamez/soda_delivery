@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Button, TextInput, TouchableHighlight, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Button, TextInput, TouchableHighlight, Image, ScrollView, TouchableOpacity, DatePickerIOS } from 'react-native'
 import style from '../Styles/Register_Style'
 import { Picker } from '@react-native-community/picker';
 import { Input } from 'react-native-elements'
@@ -17,44 +17,38 @@ export default class Register extends Component {
             lasName: null,
             userName: null,
             password: null,
-            idCafe: null,
             idDistrito: 1,
             district: "",
             passwordConfirm: null,
             exactAddress: null,
             profileImage: 'https://image.flaticon.com/icons/png/512/892/892781.png',
             phoneNumber: null,
-            userId: null,
             owner: null,
             description: null,
             typeService: null,
-            provinces: [],
-            cantons: [],
-            districts: [],
-            selectedProvince: "",
-            selectedCanton: "",
-            selectedDistrict: ""
+            provinces: {},
+            cantons: {},
+            districts: {},
+            selectedProvince: "San José",
+            selectedCanton: "Central",
+            selectedDistrict: "Carmen",
+            selectedProvinceId: 1,
+            selectedCantonId: 1,
+            selectedDistrictId: 1
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.getProvinces();
+        this.onUpdateCantons(1);
+        this.onUpdateDistrict(1, 1);
     }
     saveNewUser = () => {
         console.log(this.state.selectedPicker)
         if (this.state.selectedPicker == "usuario")
             this.saveUserUsuario()
-        //else if (this.state.selectedPicker == 'empresario')
-        //this.saveUserEmpresario
+        else if (this.state.selectedPicker == 'empresario')
+            this.saveUserEmpresario()
     }
-    getProvinces = async () => {
-        let provinces = await util.getProvinces();
-        let allProvinces = []
-        for (key in provinces) {
-            allProvinces.push(provinces[key]);
-        }
-        this.setState({ provinces: allProvinces })
-    }
-
     changePicture = async (index) => {
         //Open the gallery and choose the image or video
         const result = await loadImageFromGallery([1, 1])
@@ -81,60 +75,67 @@ export default class Register extends Component {
                     })
             })
     }
-    onChangeProvince = (value) => {
-        this.setState({selectedProvince:value})
+    getProvinces = async () => {
+        let provinces = await util.getProvinces();
+        this.setState({ provinces: provinces })
     }
-    onChangeCanton = (value) => {
-
+    onChangeProvince = (value, id) => {
+        this.setState({ selectedProvince: value, selectedProvinceId: id })
+        this.onUpdateCantons(id)
     }
-    onChangeDistrict = (value) => {
-
+    onChangeCanton = (value, id) => {
+        this.setState({ selectedCanton: value, selectedCantonId: id })
+        this.onUpdateDistrict(id)
     }
-    onUpdateCantons = (idProvince) => {
-
+    onChangeDistrict = (value, id) => {
+        this.setState({ selectedDistrict: value, selectedDistrictId: id })
     }
-    onUpdateDistrict = (idCanton) => {
-
+    onUpdateCantons = async (idProvince) => {
+        let cantons = await util.getCantons(idProvince);
+        this.setState({ cantons: cantons })
+        this.onUpdateDistrict(1);
+    }
+    onUpdateDistrict = async (idCanton) => {
+        let districts = await util.getDistricts(this.state.selectedProvinceId, idCanton);
+        this.setState({ districts: districts })
     }
     saveUserUsuario = async () => {
-
         if (!this.state.name ||
             !this.state.lasName ||
             !this.state.userName ||
             !this.state.password ||
             !this.state.passwordConfirm ||
             !this.state.phoneNumber ||
-            !this.state.userId ||
             !this.state.exactAddress) {
             alert("Información incompleta")
         } else {
             if (this.state.password !== this.state.passwordConfirm) {
                 alert("Las contraseñas no coinciden")
             } else {
-                data = {
-                    nombre: this.state.name,
-                    apellidos: this.state.lasName,
-                    contrasena: this.state.password,
-                    direccionExacta: this.state.exactAddress,
-                    idCliente: parseInt(this.state.userId),
-                    imagenPerfil: "https://cdn.pixabay.com/photo/2012/06/19/10/32/owl-50267_960_720.jpg",
-                    idDistrito: parseInt(this.state.idDistrito),
-                    usuario: this.state.userName,
-                    telefono: this.state.phoneNumber
+                let data = {
+                    name: this.state.name,
+                    lastname: this.state.lasName,
+                    pass: this.state.password,
+                    exact_direction: this.state.exactAddress,
+                    img_ulr: this.state.profileImage,
+                    district: this.state.selectedDistrict,
+                    canton: this.state.selectedCanton,
+                    province: this.state.selectedProvince,
+                    user: this.state.userName,
+                    tel: this.state.phoneNumber
                 }
                 let res = await util.registerUser(data)
-                if (res) {
-                    alert("Registrado correctamente")
+                if (res.msg) {
+                    alert(res.info)
                     this.props.navigation.goBack()
                 } else {
-                    alert("Error al registrar sus datos")
+                    alert(res.info)
                 }
             }
         }
     }
     saveUserEmpresario = async () => {
         if (!this.state.name ||
-            !this.state.idCafe ||
             !this.state.owner ||
             !this.state.description ||
             !this.state.password ||
@@ -142,32 +143,52 @@ export default class Register extends Component {
             !this.state.phoneNumber ||
             !this.state.typeService ||
             !this.state.userName ||
-            !this.state.exactAddress) {
+            !this.state.exactAddress ||
+            !this.state.profileImage) {
             alert("Información incompleta")
         } else {
             if (this.state.password !== this.state.passwordConfirm) {
                 alert("Las contraseñas no coinciden")
             } else {
-                data = {
-                    idCafe: parseInt(this.state.idCafe),
-                    idDistrito: parseInt(this.state.idDistrito),
+                let datos = {
                     owner: this.state.owner,
                     name: this.state.name,
-                    password: this.state.password,
+                    pass: this.state.password,
                     type: this.state.typeService,
-                    exactAddress: this.state.exactAddress,
+                    exact_direction: this.state.exactAddress,
                     description: this.state.description,
-                    image: "https://images.unsplash.com/photo-1481833761820-0509d3217039?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80",
-                    user: this.state.userName,
-                    video: ""
+                    province: this.state.selectedProvince,
+                    canton: this.state.selectedCanton,
+                    district: this.state.selectedDistrict,
+                    img_url: this.state.profileImage,
+                    cafe_username: this.state.userName,
+                    video_url: "",
+                    tel: this.state.phoneNumber
+                }
+                let res = await util.registerSoda(datos)
+                if (res.msg) {
+                    alert(res.info)
+                    this.props.navigation.goBack()
+                } else {
+                    alert(res.info)
                 }
             }
         }
     }
+
+
     render() {
         let myProvinces = []
-        this.state.provinces.map((province, index) => {
-            myProvinces.push(<Picker.Item label={province} value={province} key={index} />)
+        let myCantons = []
+        let myDistricts = []
+        Object.entries(this.state.provinces).map(([key, value]) => {
+            myProvinces.push(<Picker.Item label={value} id={key} value={value} key={key + value} />)
+        })
+        Object.entries(this.state.cantons).map(([key, value]) => {
+            myCantons.push(<Picker.Item label={value} id={key} value={value} key={key + value} />)
+        })
+        Object.entries(this.state.districts).map(([key, value]) => {
+            myDistricts.push(<Picker.Item label={value} id={key} value={value} key={key + value} />)
         })
         return (
             <View style={style.mainContainer}>
@@ -178,7 +199,6 @@ export default class Register extends Component {
                                 style={style.imageStyle}
                                 source={{ uri: this.state.profileImage }}
                             />
-
                         </TouchableHighlight>
                     </View>
                     <View style={style.upperContainerRight}>
@@ -200,10 +220,9 @@ export default class Register extends Component {
                     {
                         this.state.selectedPicker == "usuario" &&
                         <View style={style.usuarioMainContainer}>
-                            <Input
-                                label={"Número de identificación"}
-                                onChangeText={value => this.setState({ userId: value })}
-                            />
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Información General</Text>
+                            </View>
                             <Input
                                 label={"Nombre"}
                                 onChangeText={value => this.setState({ name: value })}
@@ -216,15 +235,37 @@ export default class Register extends Component {
                                 label={"Número de teléfono"}
                                 onChangeText={value => this.setState({ phoneNumber: value })}
                             />
-                            <Picker
-                                selectedValue={this.state.selectedProvince}
-                                onValueChange={(value) => this.onChangeProvince(value)}>
-                                {myProvinces}
-                            </Picker>
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Dirección</Text>
+                            </View>
+                            <View style={{ borderColor: 'rgba(0,0,0,0.4)', borderWidth: 1, borderRadius: 10, width: '94%', marginBottom: '4%', marginLeft: '3%' }}>
+                                <Picker
+                                    selectedValue={this.state.selectedProvince}
+                                    onValueChange={(value, id) => this.onChangeProvince(value, id + 1)}>
+                                    {myProvinces}
+                                </Picker>
+                            </View>
+                            <View style={{ borderColor: 'rgba(0,0,0,0.4)', borderWidth: 1, borderRadius: 10, width: '94%', marginBottom: '4%', marginLeft: '3%' }}>
+                                <Picker
+                                    selectedValue={this.state.selectedCanton}
+                                    onValueChange={(value, id) => this.onChangeCanton(value, id + 1)}>
+                                    {myCantons}
+                                </Picker>
+                            </View>
+                            <View style={{ borderColor: 'rgba(0,0,0,0.4)', borderWidth: 1, borderRadius: 10, width: '94%', marginBottom: '4%', marginLeft: '3%' }}>
+                                <Picker
+                                    selectedValue={this.state.selectedDistrict}
+                                    onValueChange={(value, id) => this.onChangeDistrict(value, id + 1)}>
+                                    {myDistricts}
+                                </Picker>
+                            </View>
                             <Input
                                 label={"Dirección exacta"}
                                 onChangeText={value => this.setState({ exactAddress: value })}
                             />
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Información de la Cuenta</Text>
+                            </View>
                             <Input
                                 label={"Nombre de usuario"}
                                 placeholder={"Necesario para iniciar sesión"}
@@ -248,11 +289,9 @@ export default class Register extends Component {
                         this.state.selectedPicker == "empresario" &&
 
                         <View style={style.empresarioMainContainer}>
-                            <Input
-                                label={"Número de identificación"}
-                                onChangeText={value => this.setState({ idCafe: value })}
-                                placeholder={"Valores numéricos"}
-                            />
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Información General</Text>
+                            </View>
                             <Input
                                 label={"Nombre del local"}
                                 onChangeText={value => this.setState({ name: value })}
@@ -271,9 +310,40 @@ export default class Register extends Component {
                                 onChangeText={value => this.setState({ description: value })}
                             />
                             <Input
+                                label={"Número de teléfono"}
+                                onChangeText={value => this.setState({ phoneNumber: value })}
+                            />
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Dirección</Text>
+                            </View>
+                            <View style={{ borderColor: 'rgba(0,0,0,0.4)', borderWidth: 1, borderRadius: 10, width: '94%', marginBottom: '4%', marginLeft: '3%' }}>
+                                <Picker
+                                    selectedValue={this.state.selectedProvince}
+                                    onValueChange={(value, id) => this.onChangeProvince(value, id + 1)}>
+                                    {myProvinces}
+                                </Picker>
+                            </View>
+                            <View style={{ borderColor: 'rgba(0,0,0,0.4)', borderWidth: 1, borderRadius: 10, width: '94%', marginBottom: '4%', marginLeft: '3%' }}>
+                                <Picker
+                                    selectedValue={this.state.selectedCanton}
+                                    onValueChange={(value, id) => this.onChangeCanton(value, id + 1)}>
+                                    {myCantons}
+                                </Picker>
+                            </View>
+                            <View style={{ borderColor: 'rgba(0,0,0,0.4)', borderWidth: 1, borderRadius: 10, width: '94%', marginBottom: '4%', marginLeft: '3%' }}>
+                                <Picker
+                                    selectedValue={this.state.selectedDistrict}
+                                    onValueChange={(value, id) => this.onChangeDistrict(value, id + 1)}>
+                                    {myDistricts}
+                                </Picker>
+                            </View>
+                            <Input
                                 label={"Dirección exacta"}
                                 onChangeText={value => this.setState({ exactAddress: value })}
                             />
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Información de la Cuenta</Text>
+                            </View>
                             <Input
                                 label={"Nombre de usuario"}
                                 onChangeText={value => this.setState({ userName: value })}
@@ -290,6 +360,9 @@ export default class Register extends Component {
                                 label={"Confirmar contraseña"}
                                 onChangeText={value => this.setState({ passwordConfirm: value })}
                             />
+                            <View style={style.subtitleViews}>
+                                <Text style={style.subtitleViewsText}>Multimedia</Text>
+                            </View>
                             <View style={style.mediaContainer}>
                                 <View style={style.mediaContainerLeft}>
                                     <TouchableHighlight style={style.mediaImageLeft}>
