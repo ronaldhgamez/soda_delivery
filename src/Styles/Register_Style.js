@@ -116,5 +116,16 @@ export default StyleSheet.create({
         height:'95%',
         width:'95%',
         padding:'2%'
-    }
+    },
+    subtitleViews: {
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        borderColor: 'rgba(0,0,0,0.03)',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: altura * 0.03
+    },
+    subtitleViewsText: {
+        color: 'white',
+        textAlign: 'center'
+    },
 })

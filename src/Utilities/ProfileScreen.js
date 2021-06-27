@@ -33,8 +33,8 @@ async function getUserPhone(userName) {
         return -1
     }
 }
-async function updateUserInfo(data) {
-    let response = await fetch(`${uri}/api/updateUserInfo`, {
+async function updateUser(data) {
+    let response = await fetch(`${uri}/api/updateUser`, {
         method: "post",
         body: JSON.stringify(data),
         headers: { 'Content-type': 'application/json' }
@@ -45,5 +45,5 @@ async function updateUserInfo(data) {
 export {
     getUserInfo,
     getUserPhone,
-    updateUserInfo
+    updateUser
 }

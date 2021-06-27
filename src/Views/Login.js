@@ -11,18 +11,19 @@ export default class Register extends Component {
         this.state = {
             userName: null,
             password: null,
-            userId: null
         }
     }
 
     onCheckLogin = async () => {
         if (this.state.userName && this.state.password) {
             let response = await util.login(this.state.userName, this.state.password)
-            if (!response) {
+            if (!response.msg) {
                 alert("El usuario no existe o la contraseña es incorrecta")
             } else {
-                this.setState({ userId: this.state.userName })
-                this.props.navigation.navigate("MainMenu", { userName: this.state.userName })
+                if(response.type=="user")
+                    this.props.navigation.navigate("MainMenu", { userName: this.state.userName })
+                else if (response.type=="cafe")
+                    alert("log in de un cafe")
             }
         }
     }
