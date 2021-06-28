@@ -93,7 +93,7 @@ export default function Orders(props) {
                                     const data = await getProductsOfMenu(item.id_order);
                                     var ms = '';
                                     for (var obj of data) {
-                                        ms = obj.product_data.name + "\n"
+                                        ms += obj.product_data.name + "\n"
                                     }
                                     ms = ms + "---------\n"
                                     setDetails( ms);
