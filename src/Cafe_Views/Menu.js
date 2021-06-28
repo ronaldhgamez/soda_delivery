@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, Button, CheckBox } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { getOrders, changeOrderState, getMenus, getProductsMenu, updateMenu, addAttributesToObjects } from './Cafe_Consults';
+import { getMenus, getProductsMenu, updateMenu, addAttributesToObjects } from './Cafe_Consults';
 
 export default function Menu(props) {
 
-    const [cafe_username, setCafe] = useState('sodamartha');
+    const [cafe_username, setCafe] = useState(props.cafe_username);
     const [menus, setMenus] = useState([]);
     const [menusChange, setMenusChange] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    const [text, setText] = useState('');
 
-    //console.log(props.route.params)
     useEffect(() => {
         (async () => {
             var data = await getMenus(cafe_username);
@@ -19,6 +17,7 @@ export default function Menu(props) {
             setMenus(data);
             setMenusChange(!menusChange);
             setLoading(!isLoading);
+
         })()
     }, []); // Runs once when component mounts for the first time
 

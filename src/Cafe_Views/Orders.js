@@ -1,18 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, Button, CheckBox } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, CheckBox } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { getOrders, changeOrderState, getNextState } from './Cafe_Consults';
 
-export default function Orders() {
+export default function Orders(props) {
 
-    const [cafe_username, setCafe] = useState('sodamartha');
+    const [cafe_username, setCafe] = useState(props.cafe_username);
     const [orders, setOrders] = useState([]);
     const [ordersChange, setOrdersChange] = useState(false);
     // Combobox options
     const [pendingCheckBox, setPending] = useState(false)
     const [preparingCheckBox, setPreparing] = useState(false)
     const [deliveredCheckBox, setDelivered] = useState(false)
-
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -30,7 +29,6 @@ export default function Orders() {
             setLoading(!isLoading);
             setOrdersChange(!ordersChange);
         })()
-
     }, []); // Runs once when component mounts for the first time
 
     const _renderOrders = ({ item, index }) => {
@@ -73,7 +71,6 @@ export default function Orders() {
                         <TouchableOpacity style={{ flexDirection: 'column', marginLeft: '5%' }}>
                             <Icon raised size={20} name='exchange' type='font-awesome' color={getNextState(item.state).color}
                                 onPress={async () => {
-                                    const ant = item.state;
                                     item.state = ((state) => {
                                         if (state === 'delivered') return 'pending';
                                         return (state === 'pending') ? 'preparing' : 'delivered';

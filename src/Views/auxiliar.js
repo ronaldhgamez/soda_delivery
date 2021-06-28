@@ -7,8 +7,8 @@ export default class auxiliar extends Component {
 
     //Create the menu
     createMenu = async () => {
-        let idInserted =await addMenu({cafe_username:  "sodamartha", descripcion: "HELLO"});
-       this.props.navigation.navigate('CreateMenu', {item:idInserted})
+        let idInserted = await addMenu({ cafe_username: "sodamartha", descripcion: "HELLO" });
+        this.props.navigation.navigate('CreateMenu', { item: idInserted })
     }
     render() {
         return (
@@ -20,9 +20,9 @@ export default class auxiliar extends Component {
                     title="MainMenu"
                     onPress={() => this.props.navigation.navigate('MainMenu')}
                 />
-                  <Button
+                <Button
                     title="Crear Menú"
-                    onPress={() =>{this.createMenu()}}
+                    onPress={() => { this.createMenu() }}
                 />
                 <Button
                     title="Sodas"
@@ -30,13 +30,8 @@ export default class auxiliar extends Component {
                 />
 
                 <Button
-                    title="Pantalla de sodas"
-                    onPress={() => this.props.navigation.navigate('Orders')}
-                />
-
-                <Button
-                    title="Pantalla Menus"
-                    onPress={() => this.props.navigation.navigate('Menu', { "user": "ronaldhg" })}
+                    title="Sodas administración"
+                    onPress={() => this.props.navigation.navigate('CafesButtonNavigation', { "cafe_username": "sodamartha" })}
                 />
 
                 <View>
