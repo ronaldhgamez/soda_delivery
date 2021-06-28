@@ -3,13 +3,22 @@ import { View, Picker, TextInput } from 'react-native';
 import style from '../Styles/ModifySoda_Style';
 import { Text, Icon, Button } from 'react-native-elements';
 import { addMenu } from "../Utilities/CreateMenuCon";
-import { getInformation, modifySodas } from '../Utilities/SodasHelper';
+import { getInformation, modifySodas,deleteCafe, deleteCafes } from '../Utilities/SodasHelper';
 
+//import { useTranslation } from 'react-i18next';
+//import i18next from 'i18next';
+//import * as serviceWorker from './serviceWorker';
+/*
+function handleClick(lang) {
+  t = useTranslation();
+  i18next.changeLanguage(lang)
+}
+*/
 class ModifySoda extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cafe_username: 'sodamartha',
+      cafe_username: '',
       description: '',
       exact_direction: '',
       names: '',
@@ -38,13 +47,15 @@ class ModifySoda extends Component {
   //----------------------------------------------------------------
 
   modify = async () => {
-    const {description, exact_direction, names, owner, type, cafe_username } = this.state;
-    const updated = await modifySodas(description, exact_direction,names,owner, type, cafe_username);
+    const { description, exact_direction, names, owner, type, cafe_username } = this.state;
+    const updated = await modifySodas(description, exact_direction, names, owner, type, cafe_username);
     console.log("updated: " + updated);
   }
 
-  delete = async()=>{
-    console.log("borrando");
+  delete = async () => {
+    const { cafe_username } = this.state;
+    const del = await deleteCafes(cafe_username);
+    console.log("deleted: "+del);
   }
 
   //----------------------------------------------------------------
@@ -59,6 +70,7 @@ class ModifySoda extends Component {
   render() {
     return (
       <View style={style.container}>
+
         <Text></Text>
         <Text style={style.logo}> Modificar Soda</Text>
         <Icon name='edit' type="font-awesome" size={35} color='black' />
@@ -131,8 +143,20 @@ class ModifySoda extends Component {
           type='ionicon'
           color='#f50'
           size={20}
-          onPress={() => console.log('borrando')}
+          onPress={() => this.delete()}
         />
+
+        <View style={{ alignSelf: 'flex-end', marginRight: '23%', marginTop: '-15%' }}>
+          <Icon
+            raised
+            size={15} name='language'
+            type='font-awesome'
+            color='blue'
+            onPress={() => handleClick('en')} >
+
+          </Icon>
+
+        </View>
 
       </View>
     );

@@ -23,7 +23,7 @@ export default class Register extends Component {
                 if(response.type=="user")
                     this.props.navigation.navigate("MainMenu", { userName: this.state.userName })
                 else if (response.type=="cafe")
-                    alert("log in de un cafe")
+                    this.props.navigation.navigate("CafesButtonNavigation", { "cafe_username": this.state.userName })
             }
         }
     }
