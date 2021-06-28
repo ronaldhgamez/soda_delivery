@@ -2,8 +2,8 @@ import fetch from 'node-fetch'
 import Constants from "expo-constants";
 
 const { manifest } = Constants;
-//const uri = `http://${manifest.debuggerHost.split(':').shift()}:4000` //comment this if testing on PC
-const uri = 'https://soda-nodejs-backend.herokuapp.com'
+const uri = `http://${manifest.debuggerHost.split(':').shift()}:4000` //comment this if testing on PC
+//const uri = 'https://soda-nodejs-backend.herokuapp.com'
 
 async function getUserOrders(userName) {
     let response = await fetch(`${uri}/api/getUserOrders`, {

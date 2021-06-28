@@ -128,7 +128,7 @@ export default class MainMenu extends Component {
 
     dinamycSoda = (soda, indice) => {
         return (
-            <TouchableOpacity key={indice.toString()} onPress={() => alert("Hacer ventana perfil de soda")}>
+            <TouchableOpacity key={indice.toString()} onPress={()=>this.props.navigation.navigate('SodasPerfilOriginal',{'user':this.state.userName,'cafe_username':soda.cafe_username})}>
                 <View style={style.dinamycMainContainer} >
                     <View style={style.dinamycLeftSide}>
                         <TouchableHighlight style={style.dinamycPintureContainer} >
