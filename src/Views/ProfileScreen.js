@@ -186,6 +186,11 @@ export default class ProfileScreen extends Component {
                         </View>
                     </View>
                 </View>
+                <View style={{width:'100%'}}>
+                    <TouchableHighlight style={style.userHistoryContainer} onPress={()=>this.props.navigation.navigate('UserHistory',{'userName':this.state.myUserName})}>
+                        <Text style={style.userHistoryText}> Ver historial de compras {'>>>'}</Text>
+                    </TouchableHighlight>
+                </View>
                 <ScrollView style={style.contentView}>
                     <View style={style.subtitleViews}>
                         <Text style={style.subtitleViewsText}>Información General</Text>
@@ -337,7 +342,6 @@ export default class ProfileScreen extends Component {
                             </TouchableHighlight>
                         </View>
                     }
-
                 </View>
                 <View style={style.bottonView}>
                     <Icon

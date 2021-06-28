@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableHighlight, Image, TouchableOpacity } from 'react-native'
+import { View, ScrollView, TouchableHighlight, Image, TouchableOpacity,Button } from 'react-native'
 import style from '../Styles/MainMenu_Style'
 import { Text, Icon, SearchBar } from 'react-native-elements';
-import { Button } from 'react-native-elements/dist/buttons/Button';
 const helper = require('../Utilities/SodasHelper')
 import { Picker} from '@react-native-community/picker'
 

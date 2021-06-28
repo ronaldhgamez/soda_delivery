@@ -16,8 +16,10 @@ import Login from '../src/Views/Login'
 import Register from '../src/Views/Register'
 import Orders from '../src/Cafe_Views/Orders'
 import Menu from '../src/Cafe_Views/Menu'
+import UserHistory from '../src/Views/UserHistory'
+import UserHistoryDetail from '../src/Views/UserHistoryDetail'
 
-import {LogBox} from 'react-native'
+import { LogBox } from 'react-native'
 
 LogBox.ignoreAllLogs()
 
@@ -64,6 +66,14 @@ export default function App() {
         <Stack.Screen
           name='Menu'
           component={Menu}
+        />
+        <Stack.Screen
+          name='UserHistory'
+          component={UserHistory}
+        />
+        <Stack.Screen
+          name='UserHistoryDetail'
+          component={UserHistoryDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>

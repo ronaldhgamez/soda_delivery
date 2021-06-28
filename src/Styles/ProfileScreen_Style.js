@@ -33,6 +33,8 @@ export default StyleSheet.create({
         borderTopColor: 'rgba(1,1,1,0)',
         borderRightColor: 'rgba(1,1,1,0)',
         borderLeftColor: 'rgba(1,1,1,0)',
+        borderStartColor: 'rgba(1,1,1,0)',
+        borderEndColor:'rgba(1,1,1,0)',
         borderWidth: 3
     },
     bottonView: {
@@ -74,6 +76,8 @@ export default StyleSheet.create({
         borderBottomColor: 'rgba(83,132,237,0.8)',
         borderLeftColor: 'rgba(0,0,0,0)',
         borderRightColor: 'rgba(0,0,0,0)',
+        borderStartColor: 'rgba(0,0,0,0)',
+        borderEndColor:'rgba(0,0,0,0)',
         borderTopColor: 'rgba(0,0,0,0)'
     },
     editingButton: {
@@ -107,15 +111,38 @@ export default StyleSheet.create({
         borderBottomColor: 'rgba(0,0,0,0.2)',
         borderStartColor: 'rgba(0,0,0,0)',
         borderEndColor: 'rgba(0,0,0,0)',
+        borderLeftColor: 'rgba(0,0,0,0)',
+        borderRightColor:'rgba(0,0,0,0)',
         borderTopColor: 'rgba(0,0,0,0)'
-
     },
     textInputLabel: {
         fontWeight: 'bold'
     },
-    addressEditingContainer:{
+    addressEditingContainer: {
+        borderRadius: 10,
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        paddingTop: '3%'
+    },
+    userHistoryContainer: {
+        marginTop:5,
+        marginBottom:2,
+        padding:4,
+        borderColor: 'red',
+        borderWidth: 1,
         borderRadius:10,
-        backgroundColor : 'rgba(0,0,0,0.05)',
-        paddingTop:'3%'
+        borderBottomColor: 'blue',
+        //borderBottomColor: 'rgba(0,0,0,0.2)',
+        borderStartColor: 'rgba(0,0,0,0)',
+        borderEndColor: 'rgba(0,0,0,0)',
+        borderLeftColor: 'rgba(0,0,0,0)',
+        borderRightColor:'rgba(0,0,0,0)',
+        //borderTopColor: 'rgba(0,0,0,0.2)'
+        borderTopColor: 'blue'
+    },
+    userHistoryText: {
+        textAlign:'center',
+        color: 'blue',
+        fontWeight: 'bold',
+        fontStyle: 'italic'
     }
 })
