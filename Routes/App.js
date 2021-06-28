@@ -14,9 +14,11 @@ import ModifySoda from '../src/Views/ModifySoda';
 import ProfileScreen from '../src/Views/ProfileScreen';
 import Login from '../src/Views/Login'
 import Register from '../src/Views/Register'
+import UserHistory from '../src/Views/UserHistory'
+import UserHistoryDetail from '../src/Views/UserHistoryDetail'
 import CafesButtonNavigation from '../src/Cafe_Views/CafesButtonNavigation';
 
-import {LogBox} from 'react-native'
+import { LogBox } from 'react-native'
 
 LogBox.ignoreAllLogs()
 
@@ -59,6 +61,14 @@ export default function App() {
         <Stack.Screen
           name='CafesButtonNavigation'
           component={CafesButtonNavigation}
+        />
+        <Stack.Screen
+          name='UserHistory'
+          component={UserHistory}
+        />
+        <Stack.Screen
+          name='UserHistoryDetail'
+          component={UserHistoryDetail}
         />
       </Stack.Navigator>
     </NavigationContainer>

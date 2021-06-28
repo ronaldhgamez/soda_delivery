@@ -363,18 +363,6 @@ export default class Register extends Component {
                             <View style={style.subtitleViews}>
                                 <Text style={style.subtitleViewsText}>Multimedia</Text>
                             </View>
-                            <View style={style.mediaContainer}>
-                                <View style={style.mediaContainerLeft}>
-                                    <TouchableHighlight style={style.mediaImageLeft}>
-                                        <Image style={{ resizeMode: 'contain', width: '100%', height: '100%' }} source={{ uri: "https://image.flaticon.com/icons/png/512/685/685685.png" }} />
-                                    </TouchableHighlight>
-                                </View>
-                                <View style={style.mediaContainerRight}>
-                                    <TouchableHighlight style={style.mediaImageRight}>
-                                        <Image style={{ resizeMode: 'contain', width: '100%', height: '100%' }} source={{ uri: "https://image.flaticon.com/icons/png/512/1294/1294320.png" }} />
-                                    </TouchableHighlight>
-                                </View>
-                            </View>
                         </View>
                     }
                 </ScrollView>
