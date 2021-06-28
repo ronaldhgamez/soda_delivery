@@ -30,8 +30,17 @@ export default function CafesButtonNavigation(props) {
             icon: 'restaurant-menu',
             icon_type: 'material-icons',
             label: 'Menus',
-            barColor: '#f8eb34',
+            barColor: 'black',
             screen: <Menu cafe_username={cafe_username} navigation={props.route.params.navigation} />,
+            pressColor: 'rgba(255, 255, 255, 0.16)'
+        },
+        {
+            key: 'modify_tab',
+            icon: 'edit',
+            icon_type: 'material-icons',
+            label: 'Editar',
+            barColor: 'black',
+            screen: <ModifySoda cafe_username={cafe_username} />,
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ]
@@ -52,7 +61,7 @@ export default function CafesButtonNavigation(props) {
     const renderScreen = () => {
         return active_tab == 'orders_tab' && tabs[0].screen ||
             active_tab == 'menus_tab' && tabs[1].screen ||
-            tabs[1].screen
+            tabs[2].screen
     }
 
     return <>

@@ -160,7 +160,6 @@ export default class MainMenu extends Component {
         setTimeout(() => {
             this.onFilterResults()
         }, 500);
-
     }
     
     onFilterResults = () => {

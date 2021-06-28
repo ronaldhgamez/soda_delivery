@@ -21,7 +21,7 @@ export default class UserHistoryDetail extends Component {
         this.getOrderData();
     }
     getProductData = async () => {
-        let data = await util.getProductsOfOrders(this.state.id_order);
+        //let data = await util.getProductsOfOrders(this.state.id_order);
         //let products = []
         //data.map(async (doc) => {
         //let dat = await util.getProductData(doc.id_product);

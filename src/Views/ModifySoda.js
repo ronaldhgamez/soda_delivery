@@ -18,7 +18,7 @@ class ModifySoda extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cafe_username: '',
+      cafe_username:this.props.cafe_username,
       description: '',
       exact_direction: '',
       names: '',
