@@ -46,8 +46,20 @@ const getInformation = async (cafe_username) => {
     })
     return await response.json();
 }
+
+const deleteCafes = async (cafe_username) => {
+    const response = await fetch(`${uri}/api/deleteCafe`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "cafe_username": cafe_username })
+    });
+    let json = await response.json();
+    return json.deleted;
+}
+
 export {
     getSodas,
     modifySodas,
-    getInformation
+    getInformation,
+    deleteCafes
 }

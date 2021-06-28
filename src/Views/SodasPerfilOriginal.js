@@ -5,10 +5,6 @@ import styles from '../Styles/Sodas_Perfil_Original_Styles'
 import { _renderItem, _renderProduct } from '../Components/FlatListProducts';
 import ModifySoda from './ModifySoda';
 import 'react-native-gesture-handler';
-
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
-
 export default class SodaPerfilOriginal extends Component {
 
     constructor(props) {
@@ -153,7 +149,8 @@ export default class SodaPerfilOriginal extends Component {
                                 raised
                                 size={15} name='language'
                                 type='font-awesome'
-                                color='blue'>
+                                color='blue'
+                                onPress={() => console.log('hello')} >
                             </Icon>
 
                         </View>
