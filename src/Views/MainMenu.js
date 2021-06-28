@@ -278,7 +278,7 @@ export default class MainMenu extends Component {
                         size={45}
                         color='#bbbbbbe0'
 
-                        onPress={() => alert("Hacer ventana de settings")}
+                        
                     />
                 </View>
             </View>

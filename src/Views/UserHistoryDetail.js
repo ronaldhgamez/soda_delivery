@@ -33,7 +33,7 @@ export default class UserHistoryDetail extends Component {
         let data = await util.getOrderData(this.state.id_order)
         this.setState({ orderData: data.msg })
         this.getCafeData(data.msg.cafe_username)
-        this.getProductData();
+        //this.getProductData();
     }
     getCafeData = async (cafe_username) => {
         let data = await util.getCafeData(cafe_username);
