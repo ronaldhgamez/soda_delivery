@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, CheckBox } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { getOrders, changeOrderState, getNextState } from './Cafe_Consults';
+import { getOrders, changeOrderState, getNextState, getProductsOfMenu } from './Cafe_Consults';
+import { MaterialDialog } from 'react-native-material-dialog';
 
 export default function Orders(props) {
 
@@ -13,6 +14,9 @@ export default function Orders(props) {
     const [preparingCheckBox, setPreparing] = useState(false)
     const [deliveredCheckBox, setDelivered] = useState(false)
     const [isLoading, setLoading] = useState(true);
+
+    const [details_msg, setDetails] = useState('');
+    const [visible, setVisible] = useState(false); // show message confirmation of order
 
     useEffect(() => {
         setOrdersChange(!ordersChange);
@@ -86,7 +90,14 @@ export default function Orders(props) {
                         <TouchableOpacity style={{ flexDirection: 'column', marginLeft: '12%' }}>
                             <Icon raised size={20} name='list-1' type='fontisto' color="gray"
                                 onPress={async () => {
-
+                                    const data = await getProductsOfMenu(item.id_order);
+                                    var ms = '';
+                                    for (var obj of data) {
+                                        ms = obj.product_data.name + "\n"
+                                    }
+                                    ms = ms + "---------\n"
+                                    setDetails( ms);
+                                    setVisible(true);
                                 }}
                             />
                             <Text style={{ fontSize: 10, textAlign: 'center', fontWeight: 'bold' }}>{"Detalles\npedidos"}</Text>
@@ -137,6 +148,17 @@ export default function Orders(props) {
             keyExtractor={(item, index) => index.toString()}
             renderItem={_renderOrders}
         />
+        {/* CONFIRMATION ORDER MESSAGE */}
+        <MaterialDialog
+            title="Lista de pedidos"
+            visible={visible}
+            cancelLabel='Cancelar'
+            onOk={() => {
+                setVisible(false);
+            }}
+            onCancel={() => setVisible(false)}>
+            <Text>{details_msg}</Text>
+        </MaterialDialog>
     </>
 }
 

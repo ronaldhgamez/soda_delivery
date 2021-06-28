@@ -96,6 +96,18 @@ async function getProductsMenu(id_menu) {
     return json;
 }
 
+async function getProductsOfMenu(id_order) {
+
+    const response = await fetch(`${baseURL}/api/getProductsOfOrders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ "id_order": id_order })
+    });
+
+    let json = await response.json();
+    return json;
+}
+
 /* to update menu description */
 const updateMenu = async (id_menu, description) => {
     const response = await fetch(`${baseURL}/api/updateMenu`, {
@@ -141,5 +153,6 @@ export {
     updateMenu,
     addAttributesToObjects,
     getNextState,
-    orderFoodFirebase
+    orderFoodFirebase,
+    getProductsOfMenu
 }
