@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator, Button, CheckBox } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import { Icon } from 'react-native-elements';
+// Windows
+import Orders from './Orders'
+import Menu from './Menu'
+import ModifySoda from '../Views/ModifySoda'
 import BottomNavigation, {
     FullTab
 } from 'react-native-material-bottom-navigation'
 
-// Windows
-import Orders from './Orders'
-import Menu from './Menu'
 
 export default function CafesButtonNavigation(props) {
 
-    const [cafe_username, setCafe] = useState(props.route.params.cafe_username);
+    const cafe_username = props.route.params.cafe_username;
     const [active_tab, setActiveTab] = useState('orders_tab');
 
     const tabs = [
@@ -30,7 +31,7 @@ export default function CafesButtonNavigation(props) {
             icon_type: 'material-icons',
             label: 'Menus',
             barColor: '#f8eb34',
-            screen: <Menu cafe_username={cafe_username} />,
+            screen: <Menu cafe_username={cafe_username} navigation={props.route.params.navigation} />,
             pressColor: 'rgba(255, 255, 255, 0.16)'
         }
     ]

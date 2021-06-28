@@ -5,7 +5,7 @@ import { getOrders, changeOrderState, getNextState } from './Cafe_Consults';
 
 export default function Orders(props) {
 
-    const [cafe_username, setCafe] = useState(props.cafe_username);
+    const cafe_username = props.cafe_username;
     const [orders, setOrders] = useState([]);
     const [ordersChange, setOrdersChange] = useState(false);
     // Combobox options

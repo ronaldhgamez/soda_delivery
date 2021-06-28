@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, Button } from 'react-native'
 import { Avatar, Image, Icon } from 'react-native-elements'
-import { addMenu } from '../Utilities/CreateMenuCon'
+
 
 export default class auxiliar extends Component {
 
-    //Create the menu
-    createMenu = async () => {
-        let idInserted = await addMenu({ cafe_username: "sodamartha", descripcion: "HELLO" });
-        this.props.navigation.navigate('CreateMenu', { item: idInserted })
-    }
     render() {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center', alignContent: 'center', flex: 1 }}>
@@ -25,13 +20,13 @@ export default class auxiliar extends Component {
                     onPress={() => { this.createMenu() }}
                 />
                 <Button
-                    title="Sodas"
-                    onPress={() => this.props.navigation.navigate('SodasPerfilOriginal')}
+                    title="Perfil Soda"
+                    onPress={() => this.props.navigation.navigate('SodasPerfilOriginal', { "user": "ronaldhg", "cafe_username": "sodamartha" })}
                 />
 
                 <Button
                     title="Sodas administración"
-                    onPress={() => this.props.navigation.navigate('CafesButtonNavigation', { "cafe_username": "sodamartha" })}
+                    onPress={() => this.props.navigation.navigate('CafesButtonNavigation', { "cafe_username": "sodamartha", "navigation":  this.props.navigation })}
                 />
 
                 <View>

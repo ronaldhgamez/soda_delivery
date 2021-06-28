@@ -19,7 +19,7 @@ export default class CreateMenu extends Component {
     }
 
     save = async () => {
-        await this.state.product_fields.map(n => addProduct({id_menu: this.state.idMenu, imgUrl: n.meta_foto,name: n.meta_name, price: n.meta_price}));
+        await this.state.product_fields.map(n => addProduct({id_menu: this.state.idMenu, "img_url": n.meta_foto,name: n.meta_name, price: n.meta_price}));
         for (let i = 0; i< cantPro; i++){
             this.deleteDynamicField(0)
         }
@@ -29,7 +29,7 @@ export default class CreateMenu extends Component {
     addProductField = () =>{
         cantPro = cantPro + 1;
         this.setState({
-            product_fields:[...this.state.product_fields,{meta_foto: 'value',meta_name:'value', meta_price:'value'}]
+            product_fields:[...this.state.product_fields,{meta_foto: this.state.photoURL,meta_name:'value', meta_price:'value'}]
         })
     }
     OnProductInputNameHandler = (value,index) => {

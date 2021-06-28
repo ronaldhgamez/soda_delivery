@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity, StatusBar, ActivityIndicator } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { getMenus, getProductsMenu, updateMenu, addAttributesToObjects } from './Cafe_Consults';
+import { addMenu } from '../Utilities/CreateMenuCon'
 
 export default function Menu(props) {
 
-    const [cafe_username, setCafe] = useState(props.cafe_username);
+    const cafe_username = props.cafe_username;
     const [menus, setMenus] = useState([]);
     const [menusChange, setMenusChange] = useState(false);
     const [isLoading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ export default function Menu(props) {
 
     const _renderMenus = ({ item, index }) => {
         const { product_card, description_menu } = styles;
-        //var icon_name = (item.display) ? 'angle-double-up' : 'angle-double-down'
+
         return <>
             <View key={index.toString()} style={product_card} >
                 <View style={{ flexDirection: 'column', margin: '4%' }}>
@@ -84,7 +85,6 @@ export default function Menu(props) {
                                             await updateMenu(item.id_menu, item.new_value);
                                             // reset values
                                             item.editing = !item.editing;
-                                            //item.display = !item.display;
                                             item.new_value = item.description;
                                             setMenusChange(!menusChange);
                                         }}
@@ -95,27 +95,18 @@ export default function Menu(props) {
                             </View>
                         </View>
                     )}
-
-                    {/* {(item.display) && (
-                        <>
-                            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{item.description}</Text>
-                            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{item.cafe_username}</Text>
-                            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{item.id_menu}</Text>
-                            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{item.display + ""}</Text>
-
-                        </>
-                    )} */}
-                    {/* <Icon raised size={25} name={icon_name} type='font-awesome' color='#f8eb34'
-                        onPress={() => {
-                            item.display = !item.display;
-                            setMenusChange(!menusChange);
-                        }}
-                    /> */}
-
                 </View>
             </View>
 
         </>
+    }
+
+    //Create the menu
+    const createMenu = async () => {
+        let idInserted = await addMenu({ "cafe_username": cafe_username, "description": "Nuevo menu" })
+        if (idInserted !== undefined) {
+            props.navigation.navigate('CreateMenu', { "item": idInserted })
+        }
     }
 
     return <>
@@ -124,7 +115,7 @@ export default function Menu(props) {
 
         <TouchableOpacity
             style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'lightgray' }}
-            onPress={() => { }}
+            onPress={async () => { createMenu() }}
         >
             <Icon raised size={20} name='plus' type='font-awesome' color='#12e4af' />
             <Text style={{ fontSize: 15 }}>{"Agregar un nuevo menu"}</Text>
