@@ -6,7 +6,8 @@ import { Button } from 'react-native-elements/dist/buttons/Button';
 const helper = require('../Utilities/SodasHelper')
 import { Picker} from '@react-native-community/picker'
 
-//const Tab = createBottomTabNavigator();
+let flagY = false;
+let filterResult = [] //sodas found
 
 export default class MainMenu extends Component {
     constructor(props) {
@@ -23,9 +24,80 @@ export default class MainMenu extends Component {
             selectedAddressFilter: "Todo"
         }
     }
+    
+    searchProduct = async (soda, product, sodaT)=>{
+        let listProducts = await helper.getProducts(soda);
+        for (var i in listProducts){
+            let wordLower = listProducts[i].toLowerCase()
+            if(wordLower.includes(product)){
+                filterResult.push(sodaT)
+                this.setState({ sodas: filterResult })
+                return;
+            }
+        }
+        return;
+    }
+    
+    searchType = async (soda, type, sodaT)=>{
+        let listMenu = await  helper.getTypes(soda);
+        for(var i in listMenu){
+            let wordLower = listMenu[i].toLowerCase()
+            if(wordLower.includes(type)){
+                filterResult.push(sodaT)
+                this.setState({ sodas: filterResult })
+                return;
+            }
+        }
+        return;
+    }
+    
+    verifySoda = async (listSoda, idSoda)=>{
+        for(var i in listSoda){
+            if(listSoda[i].cafe_username === idSoda){
+                flagY = true;
+                return;
+            }
+        }
+        flagY = false
+        return;
+    }
 
-    onSearchUpdate = (search) => {
-        this.setState({ search: search })
+   onSearchUpdate = async (search) => {
+        filterResult = []
+        //read all sodas
+        this.state.sodasBackUp.map((soda) => {
+
+            let searching = search.toLowerCase()    //the thing the user is searching in lowercase
+            let partSearching = searching.split(' ') //the thing the user is searching in parts
+
+            for(var i in partSearching){ //verify each word write for the user
+                let newSearching = partSearching[i]; //a unic part of the thing the user write
+                if(newSearching.length > 2){ //only search words with more of 3 letters
+                    this.verifySoda(filterResult,soda.cafe_username)
+                    if(flagY === false){
+                        let wordLowerED = soda.exact_direction.toLowerCase()
+                        let wordLowerD = soda.district.toLowerCase()
+                        let wordLowerN = soda.name.toLowerCase()
+
+                        this.searchProduct(soda.cafe_username, newSearching, soda)
+                        this.searchType(soda.cafe_username, newSearching, soda)
+
+                        if(wordLowerED.includes(newSearching)){  //the user is searching by exact direction
+                            filterResult.push(soda)
+                        }
+                        else if(wordLowerD.includes(newSearching)){ //the user is searching by district
+                            filterResult.push(soda)
+                        }
+
+                        else if(wordLowerN.includes(newSearching)){ //the user is searching by name
+                            filterResult.push(soda)
+                        }
+                    }
+                }
+            }
+        })
+        this.setState({ sodas: filterResult })
+
     }
 
     onFiltersVisibleStatus = () => {
@@ -39,6 +111,7 @@ export default class MainMenu extends Component {
         let addressLst = []
         for (var key in sodas) {
             sodaLst.push(sodas[key])
+            
             if (!foodLst.includes(sodas[key].type)) {
                 foodLst.push(sodas[key].type)
             }
@@ -46,8 +119,10 @@ export default class MainMenu extends Component {
                 addressLst.push(sodas[key].district)
             }
         }
+        
         this.setState({ sodas: sodaLst, allAddresses: addressLst, foodTypes: foodLst, sodasBackUp: sodaLst })
     }
+    
     componentDidMount() {
         this.getSodas()
     }
@@ -80,6 +155,7 @@ export default class MainMenu extends Component {
             this.onFilterResults()
         }, 500)
     }
+    
     onAddressFilterUpdate = (value) => {
         this.setState({ selectedAddressFilter: value })
         setTimeout(() => {
@@ -87,6 +163,7 @@ export default class MainMenu extends Component {
         }, 500);
 
     }
+    
     onFilterResults = () => {
 
         if (this.state.selectedAddressFilter == "Todo" && this.state.selectedFoodFilter == "Todo") {
@@ -115,9 +192,14 @@ export default class MainMenu extends Component {
             this.setState({ sodas: filterResult })
         }
     }
+    
     a = () => {
         alert("botón para hacer pruebas ")
     }
+    updateSearch = (search) => {
+        this.setState({ search: search });
+    };
+
     render() {
         let myFoodTypes = []
         myFoodTypes.push(<Picker.Item label={"Todo"} value={"Todo"} key={"Todo"} />)
@@ -130,18 +212,20 @@ export default class MainMenu extends Component {
 
             myAddresses.push(<Picker.Item label={address} value={address} key={index} />)
         })
+        
         return (
             <View style={style.MainMenu}>
                 <View style={style.searchBar}>
                     <SearchBar
                         placeholder="Type here to search"
-                        onChangeText={this.onSearchUpdate}
+                        onChangeText={this.updateSearch}
                         value={this.state.search}
-                        lightTheme={true}
                         containerStyle={style.searchBarContainer}
                         inputContainerStyle={style.searBarInput}
+                        lightTheme={true}
                         inputStyle={{ color: 'white' }}
                         clearIcon={true}
+                        onSubmitEditing={()=>this.onSearchUpdate(this.state.search)}
                     />
                     <Icon
                         containerStyle={style.filterIconContainer}
