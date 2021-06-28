@@ -14,8 +14,7 @@ import ModifySoda from '../src/Views/ModifySoda';
 import ProfileScreen from '../src/Views/ProfileScreen';
 import Login from '../src/Views/Login'
 import Register from '../src/Views/Register'
-import Orders from '../src/Cafe_Views/Orders'
-import Menu from '../src/Cafe_Views/Menu'
+import CafesButtonNavigation from '../src/Cafe_Views/CafesButtonNavigation';
 
 import {LogBox} from 'react-native'
 
@@ -58,12 +57,8 @@ export default function App() {
           component={Register}
         />
         <Stack.Screen
-          name='Orders'
-          component={Orders}
-        />
-        <Stack.Screen
-          name='Menu'
-          component={Menu}
+          name='CafesButtonNavigation'
+          component={CafesButtonNavigation}
         />
       </Stack.Navigator>
     </NavigationContainer>
