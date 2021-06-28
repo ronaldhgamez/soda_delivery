@@ -21,7 +21,7 @@ export default class UserHistoryDetail extends Component {
         this.getOrderData();
     }
     getProductData = async () => {
-        let data = await util.getProductsOfOrders(this.state.id_order);
+        //let data = await util.getProductsOfOrders(this.state.id_order);
         //let products = []
         //data.map(async (doc) => {
         //let dat = await util.getProductData(doc.id_product);
@@ -46,26 +46,21 @@ export default class UserHistoryDetail extends Component {
                 <View style={style.upperContainer}>
                     <Text style={style.upperContainerText}>Detalles de la orden</Text>
                 </View>
-                <Text>{this.state.lstProducts.length}</Text>
-                <Text>{this.state.lstProducts.length}</Text>
                 <View style={style.subtitleContainer}>
                     <Text style={style.subtitleContainerText}>General</Text>
                 </View>
-                <Text>{this.state.lstProducts.length}</Text>
                 <View style={style.generalContainer}>
                     <Text style={style.dynamicText}>Estado del pedido: {this.state.orderData.state}</Text>
                     <Text style={style.dynamicText}>Fecha: {this.state.orderData.datetime}</Text>
                     <Text style={style.dynamicText}>Cliente: {this.state.orderData.user}</Text>
-                    <TouchableHighlight onPress={() => alert("Enviar al perfil de la soda")}>
+                    <TouchableHighlight onPress={()=>this.props.navigation.navigate('SodasPerfilOriginal',{'user':this.state.orderData.user,'cafe_username':this.state.orderData.cafe_username})}>
                         <Text style={style.dynamicTextLink} >Lugar de compra: {this.state.cafeName}</Text>
                     </TouchableHighlight>
                     <Text style={style.dynamicText}>Costo total de la compra: {this.state.orderData.total}</Text>
                 </View>
-                <Text>{this.state.lstProducts.length}</Text>
                 <View style={style.subtitleContainer}>
                     <Text style={style.subtitleContainerText}>Productos</Text>
                 </View>
-                <Text>{this.state.lstProducts.length}</Text>
                 <ScrollView style={style.productsContainer}>
                     {this.state.lstProducts.map((product) => {
                         return (
@@ -73,7 +68,6 @@ export default class UserHistoryDetail extends Component {
                         )
                     })
                     }
-                    <Text>{this.state.lstProducts.length}</Text>
                 </ScrollView>
                 <View style={style.buttonsContainer}>
                     <TouchableHighlight style={{ width: '100%', justifyContent: 'center', alignItems: 'center', alignItems: 'center' }} onPress={() => this.props.navigation.goBack()}>

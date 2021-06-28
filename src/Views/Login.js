@@ -60,10 +60,6 @@ export default class Register extends Component {
                             <Text style={style.textStyle} onPress={() => this.props.navigation.navigate("Register")}>Registrarse?</Text>
                         </View>
                     </View>
-                    <Button
-                    title="ventana provisional"
-                    onPress={()=>this.props.navigation.navigate("Auxiliar")}
-                    />
                 </View>
             </ImageBackground>
         )
